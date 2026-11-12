@@ -35,7 +35,7 @@ below.
 | `CONTACT_TO_EMAIL` | Contact form | Where submissions land |
 | `CONTACT_FROM_EMAIL` | Contact form | Must be on a Resend-verified domain |
 
-Set the same variables as **Environment Variables** in your Vercel project
+Set the same variables as **Environment Variables** in your Render service
 settings for production — `.env.local` only applies locally and is
 git-ignored.
 
@@ -92,10 +92,27 @@ src/
   lib/                        # useGSAP hook, cn()/initials() helpers
 ```
 
-## Deployment (Vercel)
+## Deployment (Render)
+
+This repo includes a `render.yaml` Blueprint, so Render can read the build
+and start commands straight from the repo instead of you typing them in.
 
 1. Push this repo to GitHub (already done if you're reading this there).
-2. Import it in Vercel → New Project.
-3. Add the environment variables above under Project Settings →
-   Environment Variables.
-4. Deploy. Point your domain at it and set `NEXT_PUBLIC_SITE_URL` to match.
+2. In the [Render dashboard](https://dashboard.render.com), **New** →
+   **Blueprint**, and point it at this repo. Render will read `render.yaml`
+   and pre-fill a single Web Service (`tohybu-portfolio`, Node runtime,
+   `npm ci && npm run build` / `npm run start`, free plan).
+   - Prefer to click through it yourself instead? **New** → **Web Service**
+     with the same repo, then set those two commands by hand — the
+     Blueprint is a convenience, not a requirement.
+3. On the **Environment** tab, add the variables from the table above.
+   `render.yaml` lists them but deliberately leaves the values out — nothing
+   is required for the site to come up, but fill in what you have.
+4. Deploy. Render gives you a `*.onrender.com` URL immediately; once you
+   point your own domain at it (Settings → Custom Domains), update
+   `NEXT_PUBLIC_SITE_URL` to match and redeploy.
+
+Note for the **free** plan: the service spins down after 15 minutes idle
+and takes a few seconds to wake back up on the next visit. Fine for a
+portfolio; upgrade to a paid instance type if that cold start ever bothers
+you.

@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: tohybu-portfolio
+    runtime: node
+    plan: free
+    region: oregon
+    branch: main
+    buildCommand: npm ci && npm run build
+    startCommand: npm run start
+    healthCheckPath: /
+    envVars:
+      - key: NODE_VERSION
+        value: 20.18.0
+      # Set these in the Render dashboard (Environment tab) rather than here —
+      # `sync: false` means Render will prompt for a value instead of storing
+      # one in this file. See README.md for what each one does; none are
+      # required for the site to run.
+      - key: NEXT_PUBLIC_SITE_URL
+        sync: false
+      - key: RESEND_API_KEY
+        sync: false
+      - key: CONTACT_TO_EMAIL
+        sync: false
+      - key: CONTACT_FROM_EMAIL
+        sync: false
