@@ -36,7 +36,7 @@
 
   <rect x="56" y="330" width="46" height="3" rx="1.5" fill="#4f7dff"/>
   <text x="56" y="376" font-family="Space Grotesk, Inter, sans-serif" font-size="34" font-weight="600" fill="#f5f7fb">JIHOPE</text>
-  <text x="56" y="406" font-family="Inter, sans-serif" font-size="16" letter-spacing="0.04em" fill="#717c9b">WEB & SOFTWARE STUDIO</text>
+  <text x="56" y="406" font-family="Inter, sans-serif" font-size="16" letter-spacing="0.04em" fill="#717c9b">WEB &amp; SOFTWARE STUDIO</text>
 
   <rect width="800" height="500" fill="url(#fade)"/>
 </svg>

@@ -36,7 +36,7 @@
 
   <rect x="56" y="330" width="46" height="3" rx="1.5" fill="#36d399"/>
   <text x="56" y="376" font-family="Space Grotesk, Inter, sans-serif" font-size="34" font-weight="600" fill="#f5f7fb">EduSync</text>
-  <text x="56" y="406" font-family="Inter, sans-serif" font-size="16" letter-spacing="0.04em" fill="#717c9b">ADMISSIONS & ADMINISTRATION</text>
+  <text x="56" y="406" font-family="Inter, sans-serif" font-size="16" letter-spacing="0.04em" fill="#717c9b">ADMISSIONS &amp; ADMINISTRATION</text>
 
   <rect width="800" height="500" fill="url(#fade)"/>
 </svg>
