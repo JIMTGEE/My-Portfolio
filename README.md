@@ -94,17 +94,22 @@ src/
 
 ## Deployment (Render)
 
-This repo includes a `render.yaml` Blueprint, so Render can read the build
-and start commands straight from the repo instead of you typing them in.
+The app deploys as a **Docker** service on Render — there's a multi-stage
+`Dockerfile` at the repo root (Next.js "standalone" output, see
+`next.config.mjs`) plus a `render.yaml` Blueprint that points Render at it.
 
 1. Push this repo to GitHub (already done if you're reading this there).
 2. In the [Render dashboard](https://dashboard.render.com), **New** →
-   **Blueprint**, and point it at this repo. Render will read `render.yaml`
-   and pre-fill a single Web Service (`tohybu-portfolio`, Node runtime,
-   `npm ci && npm run build` / `npm run start`, free plan).
+   **Blueprint**, and point it at this repo. Render reads `render.yaml` and
+   pre-fills a single Web Service (`tohybu-portfolio`, Docker runtime,
+   building from `./Dockerfile`, free plan).
    - Prefer to click through it yourself instead? **New** → **Web Service**
-     with the same repo, then set those two commands by hand — the
-     Blueprint is a convenience, not a requirement.
+     with the same repo, and when it asks for a **Language/Runtime**, pick
+     **Docker** (not Node) — Render will find the Dockerfile automatically.
+     Picking "Node" there is what caused the first deploy to fail: Render
+     looked for build/start commands to run with its own Node buildpack
+     instead of building the Dockerfile, so nothing in this repo matched
+     what it expected.
 3. On the **Environment** tab, add the variables from the table above.
    `render.yaml` lists them but deliberately leaves the values out — nothing
    is required for the site to come up, but fill in what you have.
