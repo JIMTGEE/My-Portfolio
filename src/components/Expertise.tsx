@@ -7,6 +7,7 @@ export function Expertise() {
     <section id="expertise" className="relative py-24 sm:py-28">
       <div className="container-page">
         <SectionHeading
+          index="02"
           kicker="Expertise"
           heading="What I work with — and what I'm still learning"
           description="I keep a clear line between skills I use professionally day to day and technologies I'm actively learning. Nothing below is overstated."

@@ -19,6 +19,7 @@ export function About() {
       <div className="container-page grid gap-14 lg:grid-cols-[1fr_0.85fr]">
         <div>
           <SectionHeading
+            index="01"
             kicker={profile.about.kicker}
             heading={profile.about.heading}
           />

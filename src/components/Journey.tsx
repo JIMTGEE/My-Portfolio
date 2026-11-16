@@ -42,6 +42,7 @@ export function Journey() {
     <section id="journey" className="relative bg-ink-900/40 py-24 sm:py-28">
       <div className="container-page">
         <SectionHeading
+          index="07"
           kicker="Professional Journey"
           heading="How I got here"
           description="Entrepreneurship, teaching, travel — and a straight line of self-directed technical learning running through all of it."

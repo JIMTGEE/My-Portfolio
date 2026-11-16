@@ -7,6 +7,7 @@ export function Services() {
     <section id="services" className="relative bg-ink-900/40 py-24 sm:py-28">
       <div className="container-page">
         <SectionHeading
+          index="03"
           kicker="Services"
           heading="What I can build for you"
           description="Practical, delivered work — not a menu of buzzwords."

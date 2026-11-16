@@ -16,6 +16,7 @@ export function Projects() {
       <div className="container-page">
         <div className="flex flex-col gap-8 sm:flex-row sm:items-end sm:justify-between">
           <SectionHeading
+            index="04"
             kicker="Projects"
             heading="Systems I've actually shipped"
             description="Real client work — public sites, admin dashboards, and the problems they were built to solve. Not a mockup in the bunch."
@@ -41,7 +42,7 @@ export function Projects() {
 
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {visible.map((p, i) => (
-            <ProjectCard key={p.slug} project={p} delay={(i % 3) * 0.07} />
+            <ProjectCard key={p.slug} project={p} index={i + 1} delay={(i % 3) * 0.07} />
           ))}
         </div>
       </div>

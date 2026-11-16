@@ -61,6 +61,7 @@ export function Contact() {
     <section id="contact" className="relative py-24 sm:py-28">
       <div className="container-page">
         <SectionHeading
+          index="08"
           kicker="Contact"
           heading="Let's work together"
           description="Open to freelance work, collaboration, and conversations about technology, AI, or the next thing to build."

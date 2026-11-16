@@ -28,10 +28,20 @@ const config: Config = {
           500: "rgb(var(--mist-500) / <alpha-value>)",
         },
         accent: {
-          DEFAULT: "#4f7dff",
-          soft: "#7c9bff",
-          violet: "#8b6bff",
-          deep: "#2f4fd1",
+          DEFAULT: "#6a52ff",
+          soft: "#a799ff",
+          violet: "#b06bff",
+          deep: "#3f23d6",
+        },
+        // pulse = the one neon "pop" color, reserved for the few moments
+        // that should feel electric rather than tasteful: cursor hover
+        // labels, index numerals, CTA glows, the hero scene's rim light.
+        // Used sparingly on purpose — a studio site has one signature
+        // accent, not five.
+        pulse: {
+          DEFAULT: "#caff3f",
+          soft: "#e2ff9e",
+          deep: "#9fe016",
         },
         signal: {
           green: "#36d399",
@@ -47,7 +57,7 @@ const config: Config = {
       },
       backgroundImage: {
         "grid-fade":
-          "linear-gradient(to bottom, rgba(79,125,255,0.08), transparent 70%)",
+          "linear-gradient(to bottom, rgba(106,82,255,0.1), transparent 70%)",
       },
       keyframes: {
         "fade-up": {
@@ -58,10 +68,15 @@ const config: Config = {
           "0%, 49%": { opacity: "1" },
           "50%, 100%": { opacity: "0" },
         },
+        "glow-pulse": {
+          "0%, 100%": { opacity: "0.55", transform: "scale(1)" },
+          "50%": { opacity: "0.85", transform: "scale(1.06)" },
+        },
       },
       animation: {
         "fade-up": "fade-up 0.6s ease forwards",
         blink: "blink 1s step-end infinite",
+        "glow-pulse": "glow-pulse 6s ease-in-out infinite",
       },
     },
   },

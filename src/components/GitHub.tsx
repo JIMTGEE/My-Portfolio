@@ -124,6 +124,7 @@ export function GitHubSection() {
     <section id="github" className="relative bg-ink-900/40 py-24 sm:py-28">
       <div className="container-page">
         <SectionHeading
+          index="05"
           kicker="GitHub"
           heading="Live from my GitHub"
           description="Pulled directly from the GitHub API — not a curated screenshot. Real repositories, real activity."
@@ -202,7 +203,7 @@ export function GitHubSection() {
 
               <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
                 {state.repos.map((r, i) => (
-                  <RepoCard key={r.id} repo={r} delay={(i % 3) * 0.06} />
+                  <RepoCard key={r.id} repo={r} index={i + 1} delay={(i % 3) * 0.06} />
                 ))}
               </div>
             </>
@@ -213,9 +214,10 @@ export function GitHubSection() {
   );
 }
 
-function RepoCard({ repo: r, delay }: { repo: GHRepo; delay: number }) {
+function RepoCard({ repo: r, delay, index }: { repo: GHRepo; delay: number; index: number }) {
   const { fine } = useMotionCapability();
   const tiltRef = useTilt<HTMLAnchorElement>(fine, 6);
+  const num = String(index).padStart(2, "0");
 
   return (
     <RevealOnScroll delay={delay}>
@@ -224,15 +226,22 @@ function RepoCard({ repo: r, delay }: { repo: GHRepo; delay: number }) {
         href={r.html_url}
         target="_blank"
         rel="noreferrer"
-        className="focus-ring group relative block h-full overflow-hidden rounded-2xl border border-mist-500/10 bg-ink-900/30 p-5 transition hover:border-accent/30"
+        data-cursor-label="Open"
+        className="focus-ring group relative block h-full overflow-hidden rounded-2xl border border-mist-500/10 bg-ink-900/30 p-5 transition duration-300 hover:-translate-y-1 hover:border-pulse/40 hover:shadow-[0_18px_60px_-12px_rgba(202,255,63,0.2)]"
       >
-        <div className="flex items-start justify-between gap-2">
+        <span
+          aria-hidden="true"
+          className="ghost-numeral pointer-events-none absolute -bottom-4 -right-1 select-none text-[3.5rem] opacity-70 transition group-hover:opacity-100"
+        >
+          {num}
+        </span>
+        <div className="relative flex items-start justify-between gap-2">
           <p className="font-mono text-sm font-semibold text-mist-100">
             {r.name}
           </p>
           <ExternalLink
             size={14}
-            className="mt-0.5 shrink-0 text-mist-500 transition group-hover:text-accent"
+            className="mt-0.5 shrink-0 text-mist-500 transition group-hover:text-pulse"
           />
         </div>
         <p className="mt-2 line-clamp-2 min-h-[2.5rem] text-xs leading-relaxed text-mist-400">

@@ -6,6 +6,7 @@ import { Footer } from "@/components/Footer";
 import { SmoothScroll } from "@/components/SmoothScroll";
 import { Cursor } from "@/components/Cursor";
 import { ScrollProgress } from "@/components/ScrollProgress";
+import { Intro } from "@/components/Intro";
 import { profile } from "@/data/profile";
 import "./globals.css";
 
@@ -107,7 +108,9 @@ export default function RootLayout({
         <a href="#main" className="skip-link">
           Skip to content
         </a>
+        <div className="vignette-overlay" aria-hidden="true" />
         <div className="grain-overlay" aria-hidden="true" />
+        <Intro />
         <SmoothScroll>
           <ScrollProgress />
           <Cursor />

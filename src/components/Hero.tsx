@@ -36,29 +36,50 @@ export function Hero() {
   const { capable, fine } = useMotionCapability();
   const ctaRef = useMagnetic<HTMLAnchorElement>(capable && fine, 0.3, 70);
 
+  const sceneRef = useRef<HTMLDivElement>(null);
+
   useGSAP(fieldRef, (gsap, ScrollTrigger) => {
     const layers = fieldRef.current?.querySelectorAll<HTMLElement>("[data-speed]");
-    if (!layers?.length) return;
+    if (layers?.length) {
+      layers.forEach((layer) => {
+        const speed = parseFloat(layer.dataset.speed ?? "0.2");
+        gsap.to(layer, {
+          yPercent: speed * 100,
+          ease: "none",
+          scrollTrigger: {
+            trigger: fieldRef.current,
+            start: "top top",
+            end: "bottom top",
+            scrub: 0.6,
+          },
+        });
+      });
+    }
 
-    layers.forEach((layer) => {
-      const speed = parseFloat(layer.dataset.speed ?? "0.2");
-      gsap.to(layer, {
-        yPercent: speed * 100,
+    // The hero's one cinematic scroll "set piece": scrolling past it zooms
+    // the 3D scene and its glow outward and dissolves them, instead of the
+    // section just sliding off underneath the next one like a stack of
+    // cards. This is the moment meant to make the scroll itself feel like
+    // part of the design, not just a way to move past it.
+    if (sceneRef.current) {
+      gsap.to(sceneRef.current, {
+        scale: 1.35,
+        opacity: 0,
         ease: "none",
         scrollTrigger: {
           trigger: fieldRef.current,
           start: "top top",
           end: "bottom top",
-          scrub: 0.6,
+          scrub: 0.4,
         },
       });
-    });
+    }
   });
 
   return (
     <section
       id="top"
-      className="relative overflow-hidden bg-ink-950 pb-24 pt-14 sm:pt-20"
+      className="relative flex min-h-[calc(100svh-4rem)] items-center overflow-hidden bg-ink-950 py-14"
     >
       {/*
         Parallax background field (blobs, grid, 3D canvas). `-z-10` here was
@@ -74,19 +95,20 @@ export function Hero() {
       <div ref={fieldRef} className="pointer-events-none absolute inset-0">
         <div
           data-speed="0.15"
-          className="absolute -left-24 top-[-6rem] h-[28rem] w-[28rem] rounded-full bg-accent/10 blur-3xl"
+          className="ambient-glow absolute -left-32 top-[-8rem] h-[34rem] w-[34rem] animate-glow-pulse"
         />
         <div
           data-speed="0.3"
-          className="absolute right-[-8rem] top-32 h-[24rem] w-[24rem] rounded-full bg-accent-violet/10 blur-3xl"
+          className="ambient-glow absolute right-[-10rem] top-20 h-[30rem] w-[30rem] animate-glow-pulse"
+          style={{ animationDelay: "-3s" }}
         />
         <div
           data-speed="0.45"
-          className="absolute inset-x-0 top-0 h-[40rem] bg-[radial-gradient(circle_at_20%_20%,rgba(79,125,255,0.14),transparent_55%)]"
+          className="absolute inset-x-0 top-0 h-[40rem] bg-[radial-gradient(circle_at_20%_20%,rgba(106,82,255,0.2),transparent_55%)]"
         />
         <svg
           data-speed="0.22"
-          className="absolute inset-0 h-full w-full opacity-[0.07]"
+          className="absolute inset-0 h-full w-full opacity-[0.09]"
           aria-hidden="true"
         >
           <defs>
@@ -110,6 +132,7 @@ export function Hero() {
 
         {capable && (
           <motion.div
+            ref={sceneRef}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1.2, delay: 0.3 }}
@@ -118,6 +141,12 @@ export function Hero() {
             <HeroScene />
           </motion.div>
         )}
+
+        {/* Legibility scrim — the 3D scene and glow now span the full hero
+            (the brief wants the 3D to read as the hero's main character, not
+            a shy accent in one corner), so the copy column needs a solid-ish
+            backdrop to stay readable over whatever's rendering behind it. */}
+        <div className="absolute inset-0 bg-gradient-to-r from-ink-950 via-ink-950/55 to-transparent lg:from-ink-950 lg:via-ink-950/35 lg:to-transparent" />
       </div>
 
       <div className="container-page relative z-10 grid items-center gap-16 lg:grid-cols-[1.15fr_0.85fr]">
@@ -151,7 +180,7 @@ export function Hero() {
             ))}
           </motion.p>
 
-          <h1 className="font-display mt-5 text-4xl font-semibold leading-[1.08] text-mist-100 sm:text-5xl lg:text-6xl">
+          <h1 className="font-display mt-5 text-[clamp(2.75rem,7.5vw,5.75rem)] font-semibold leading-[0.98] tracking-tight text-mist-100">
             {profile.heroHeadline.map((line, i) => (
               <span key={line} className="block overflow-hidden">
                 <motion.span
@@ -185,7 +214,7 @@ export function Hero() {
             <a
               ref={ctaRef}
               href="#projects"
-              className="focus-ring group inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-semibold text-white transition hover:bg-accent-deep"
+              className="focus-ring group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-accent px-6 py-3 text-sm font-semibold text-white shadow-[0_0_0_0_rgba(202,255,63,0)] transition hover:bg-accent-deep hover:shadow-[0_0_32px_4px_rgba(202,255,63,0.35)]"
             >
               Explore Projects
               <ArrowRight
@@ -227,7 +256,13 @@ export function Hero() {
           transition={{ duration: 0.7, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
           className="relative mx-auto flex w-full max-w-sm flex-col items-center gap-6"
         >
-          <AvatarMark size={176} />
+          <div className="relative">
+            <div
+              className="ambient-glow absolute inset-0 -z-10 animate-glow-pulse"
+              aria-hidden="true"
+            />
+            <AvatarMark size={176} />
+          </div>
 
           <div className="glass-panel w-full rounded-2xl p-4 font-mono text-[11px] leading-relaxed text-mist-300 shadow-xl shadow-black/30 sm:text-xs">
             <div className="mb-2 flex gap-1.5">

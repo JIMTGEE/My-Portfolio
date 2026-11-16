@@ -8,6 +8,7 @@ export function AIFocus() {
     <section id="ai" className="relative py-24 sm:py-28">
       <div className="container-page">
         <SectionHeading
+          index="06"
           kicker="AI & Emerging Technologies"
           heading="Where I'm headed next"
           description="Learning in public, with a concrete target rather than buzzword-collecting. Clearly separated from the working skills above."
