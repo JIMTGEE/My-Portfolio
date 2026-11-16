@@ -2,12 +2,16 @@ import { profile, languages } from "@/data/profile";
 import { projects } from "@/data/projects";
 import { SectionHeading } from "./SectionHeading";
 import { RevealOnScroll } from "./RevealOnScroll";
+import { StatNumber } from "./StatNumber";
 
+// Verified statistics only (per the brief) — the project count comes
+// straight from the data file rather than being typed as a separate
+// number that could drift out of sync with it.
 const stats = [
-  { label: "Live systems shipped", value: `${projects.length}` },
+  { label: "Live systems shipped", value: projects.length },
   { label: "Core stack", value: "PHP · MySQL · JS" },
-  { label: "Years building for clients", value: "3+" },
-];
+  { label: "Years building for clients", value: 3, suffix: "+" },
+] satisfies Array<{ label: string; value: number | string; suffix?: string }>;
 
 export function About() {
   return (
@@ -34,7 +38,11 @@ export function About() {
             {stats.map((s) => (
               <div key={s.label}>
                 <p className="font-display text-2xl font-semibold text-mist-100">
-                  {s.value}
+                  {typeof s.value === "number" ? (
+                    <StatNumber value={s.value} suffix={s.suffix} />
+                  ) : (
+                    s.value
+                  )}
                 </p>
                 <p className="mt-1 text-xs uppercase tracking-wide text-mist-500">
                   {s.label}

@@ -5,6 +5,8 @@ import { Github, GitFork, Star, AlertTriangle, ExternalLink } from "lucide-react
 import { profile } from "@/data/profile";
 import { SectionHeading } from "./SectionHeading";
 import { RevealOnScroll } from "./RevealOnScroll";
+import { useTilt } from "@/lib/useTilt";
+import { useMotionCapability } from "@/lib/useMotionCapability";
 
 type GHUser = {
   login: string;
@@ -200,47 +202,7 @@ export function GitHubSection() {
 
               <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
                 {state.repos.map((r, i) => (
-                  <RevealOnScroll key={r.id} delay={(i % 3) * 0.06}>
-                    <a
-                      href={r.html_url}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="focus-ring group block h-full rounded-2xl border border-mist-500/10 bg-ink-900/30 p-5 transition hover:border-accent/30"
-                    >
-                      <div className="flex items-start justify-between gap-2">
-                        <p className="font-mono text-sm font-semibold text-mist-100">
-                          {r.name}
-                        </p>
-                        <ExternalLink
-                          size={14}
-                          className="mt-0.5 shrink-0 text-mist-500 transition group-hover:text-accent"
-                        />
-                      </div>
-                      <p className="mt-2 line-clamp-2 min-h-[2.5rem] text-xs leading-relaxed text-mist-400">
-                        {r.description ?? "No description provided."}
-                      </p>
-                      <div className="mt-4 flex items-center gap-4 text-[11px] text-mist-500">
-                        {r.language && (
-                          <span className="inline-flex items-center gap-1.5">
-                            <span
-                              className="h-2.5 w-2.5 rounded-full"
-                              style={{
-                                background:
-                                  languageColor[r.language] ?? "#717c9b",
-                              }}
-                            />
-                            {r.language}
-                          </span>
-                        )}
-                        <span className="inline-flex items-center gap-1">
-                          <Star size={12} /> {r.stargazers_count}
-                        </span>
-                        <span className="inline-flex items-center gap-1">
-                          <GitFork size={12} /> {r.forks_count}
-                        </span>
-                      </div>
-                    </a>
-                  </RevealOnScroll>
+                  <RepoCard key={r.id} repo={r} delay={(i % 3) * 0.06} />
                 ))}
               </div>
             </>
@@ -248,6 +210,56 @@ export function GitHubSection() {
         </div>
       </div>
     </section>
+  );
+}
+
+function RepoCard({ repo: r, delay }: { repo: GHRepo; delay: number }) {
+  const { fine } = useMotionCapability();
+  const tiltRef = useTilt<HTMLAnchorElement>(fine, 6);
+
+  return (
+    <RevealOnScroll delay={delay}>
+      <a
+        ref={tiltRef}
+        href={r.html_url}
+        target="_blank"
+        rel="noreferrer"
+        className="focus-ring group relative block h-full overflow-hidden rounded-2xl border border-mist-500/10 bg-ink-900/30 p-5 transition hover:border-accent/30"
+      >
+        <div className="flex items-start justify-between gap-2">
+          <p className="font-mono text-sm font-semibold text-mist-100">
+            {r.name}
+          </p>
+          <ExternalLink
+            size={14}
+            className="mt-0.5 shrink-0 text-mist-500 transition group-hover:text-accent"
+          />
+        </div>
+        <p className="mt-2 line-clamp-2 min-h-[2.5rem] text-xs leading-relaxed text-mist-400">
+          {r.description ?? "No description provided."}
+        </p>
+        <div className="mt-4 flex items-center gap-4 text-[11px] text-mist-500">
+          {r.language && (
+            <span className="inline-flex items-center gap-1.5">
+              <span
+                className="h-2.5 w-2.5 rounded-full"
+                style={{
+                  background: languageColor[r.language] ?? "#717c9b",
+                }}
+              />
+              {r.language}
+            </span>
+          )}
+          <span className="inline-flex items-center gap-1">
+            <Star size={12} /> {r.stargazers_count}
+          </span>
+          <span className="inline-flex items-center gap-1">
+            <GitFork size={12} /> {r.forks_count}
+          </span>
+        </div>
+        <div className="tilt-glare" aria-hidden="true" />
+      </a>
+    </RevealOnScroll>
   );
 }
 

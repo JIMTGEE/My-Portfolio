@@ -7,6 +7,8 @@ import { profile } from "@/data/profile";
 import { sendContactMessage, type ContactState } from "@/app/actions/contact";
 import { SectionHeading } from "./SectionHeading";
 import { RevealOnScroll } from "./RevealOnScroll";
+import { useMotionCapability } from "@/lib/useMotionCapability";
+import { useMagnetic } from "@/lib/useMagnetic";
 
 const initialState: ContactState = { status: "idle" };
 
@@ -244,8 +246,11 @@ function Field({
 
 function SubmitButton() {
   const { pending } = useFormStatus();
+  const { capable, fine } = useMotionCapability();
+  const ref = useMagnetic<HTMLButtonElement>(capable && fine && !pending, 0.3, 90);
   return (
     <button
+      ref={ref}
       type="submit"
       disabled={pending}
       className="focus-ring inline-flex w-full items-center justify-center gap-2 rounded-full bg-accent px-6 py-3.5 text-sm font-semibold text-white transition hover:bg-accent-deep disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"

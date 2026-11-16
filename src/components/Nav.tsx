@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
 import { cn } from "@/lib/utils";
+import { useMotionCapability } from "@/lib/useMotionCapability";
+import { useMagnetic } from "@/lib/useMagnetic";
 
 const links = [
   { href: "/#about", label: "About" },
@@ -20,6 +22,8 @@ const links = [
 export function Nav() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { capable, fine } = useMotionCapability();
+  const ctaRef = useMagnetic<HTMLAnchorElement>(capable && fine, 0.3, 60);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -67,6 +71,7 @@ export function Nav() {
         <div className="flex items-center gap-3">
           <ThemeToggle />
           <a
+            ref={ctaRef}
             href="/#contact"
             className="focus-ring hidden rounded-full bg-accent px-4 py-2 text-sm font-semibold text-white transition hover:bg-accent-deep sm:inline-flex"
           >

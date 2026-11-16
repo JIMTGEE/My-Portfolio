@@ -1,11 +1,19 @@
 "use client";
 
 import { useRef } from "react";
+import dynamic from "next/dynamic";
 import { useGSAP } from "@/lib/useGSAP";
+import { useMotionCapability } from "@/lib/useMotionCapability";
+import { useMagnetic } from "@/lib/useMagnetic";
 import { motion } from "framer-motion";
 import { ArrowRight, Github, MapPin } from "lucide-react";
 import { profile } from "@/data/profile";
 import { AvatarMark } from "./AvatarMark";
+
+// WebGL costs nothing until it's actually needed, and never ships to a
+// server render (no DOM/canvas there) — loaded client-side only, and only
+// ever mounted once useMotionCapability says this visitor can take it.
+const HeroScene = dynamic(() => import("./three/HeroScene"), { ssr: false });
 
 const wordVariants = {
   hidden: {},
@@ -25,6 +33,8 @@ const lineVariants = {
 
 export function Hero() {
   const fieldRef = useRef<HTMLDivElement>(null);
+  const { capable, fine } = useMotionCapability();
+  const ctaRef = useMagnetic<HTMLAnchorElement>(capable && fine, 0.3, 70);
 
   useGSAP(fieldRef, (gsap, ScrollTrigger) => {
     const layers = fieldRef.current?.querySelectorAll<HTMLElement>("[data-speed]");
@@ -50,8 +60,18 @@ export function Hero() {
       id="top"
       className="relative overflow-hidden bg-ink-950 pb-24 pt-14 sm:pt-20"
     >
-      {/* Parallax background field */}
-      <div ref={fieldRef} className="pointer-events-none absolute inset-0 -z-10">
+      {/*
+        Parallax background field (blobs, grid, 3D canvas). `-z-10` here was
+        the bug that made all of it invisible: this section paints its own
+        opaque bg-ink-950 first, and a negative-z-index child of a
+        `position: relative` box paints *below* that box's own background —
+        so the entire layer, including the 3D scene, was rendering into a
+        framebuffer that never reached the screen. Fix: leave this at the
+        default stacking position (z-index: auto) and give the foreground
+        content an explicit z-index instead, so paint order becomes
+        section-bg -> this field -> foreground content.
+      */}
+      <div ref={fieldRef} className="pointer-events-none absolute inset-0">
         <div
           data-speed="0.15"
           className="absolute -left-24 top-[-6rem] h-[28rem] w-[28rem] rounded-full bg-accent/10 blur-3xl"
@@ -87,9 +107,20 @@ export function Hero() {
           </defs>
           <rect width="100%" height="100%" fill="url(#grid)" />
         </svg>
+
+        {capable && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1.2, delay: 0.3 }}
+            className="absolute inset-0"
+          >
+            <HeroScene />
+          </motion.div>
+        )}
       </div>
 
-      <div className="container-page grid items-center gap-16 lg:grid-cols-[1.15fr_0.85fr]">
+      <div className="container-page relative z-10 grid items-center gap-16 lg:grid-cols-[1.15fr_0.85fr]">
         <div>
           <motion.div
             initial={{ opacity: 0, y: 10 }}
@@ -104,7 +135,23 @@ export function Hero() {
             {profile.availability}
           </motion.div>
 
-          <h1 className="font-display mt-6 text-4xl font-semibold leading-[1.08] text-mist-100 sm:text-5xl lg:text-6xl">
+          <motion.p
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="mt-5 flex flex-wrap items-center gap-x-2.5 gap-y-1.5 text-xs font-medium uppercase tracking-[0.14em] text-mist-500"
+          >
+            {profile.positioning.split(" · ").map((role, i, arr) => (
+              <span key={role} className="inline-flex items-center gap-2.5">
+                {role}
+                {i < arr.length - 1 && (
+                  <span className="h-1 w-1 rounded-full bg-mist-500/50" aria-hidden="true" />
+                )}
+              </span>
+            ))}
+          </motion.p>
+
+          <h1 className="font-display mt-5 text-4xl font-semibold leading-[1.08] text-mist-100 sm:text-5xl lg:text-6xl">
             {profile.heroHeadline.map((line, i) => (
               <span key={line} className="block overflow-hidden">
                 <motion.span
@@ -136,6 +183,7 @@ export function Hero() {
             className="mt-9 flex flex-wrap items-center gap-4"
           >
             <a
+              ref={ctaRef}
               href="#projects"
               className="focus-ring group inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-semibold text-white transition hover:bg-accent-deep"
             >

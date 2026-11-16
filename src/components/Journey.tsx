@@ -1,13 +1,15 @@
 "use client";
 
+import { useRef } from "react";
 import { GraduationCap } from "lucide-react";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useScroll, useSpring } from "framer-motion";
 import { journey, education } from "@/data/profile";
 import { SectionHeading } from "./SectionHeading";
 import { RevealOnScroll } from "./RevealOnScroll";
+import { usePrefersReducedMotion } from "@/lib/usePrefersReducedMotion";
 
 function JourneyItem({ index, children }: { index: number; children: React.ReactNode }) {
-  const reduce = useReducedMotion();
+  const reduce = usePrefersReducedMotion();
   return (
     <motion.li
       className="relative"
@@ -22,6 +24,20 @@ function JourneyItem({ index, children }: { index: number; children: React.React
 }
 
 export function Journey() {
+  const railRef = useRef<HTMLOListElement>(null);
+  const reduce = usePrefersReducedMotion();
+
+  // Tracks scroll progress through the list itself (not the whole page),
+  // so the fill starts the moment the first entry arrives and finishes
+  // exactly as the last one does — a connected line with animated
+  // progress, same idea as the step-rail on the JIHOPE site, done here
+  // with the timeline's own real scroll range instead of a fixed guess.
+  const { scrollYProgress } = useScroll({
+    target: railRef,
+    offset: ["start 0.75", "end 0.4"],
+  });
+  const fill = useSpring(scrollYProgress, { stiffness: 120, damping: 28, restDelta: 0.001 });
+
   return (
     <section id="journey" className="relative bg-ink-900/40 py-24 sm:py-28">
       <div className="container-page">
@@ -32,7 +48,12 @@ export function Journey() {
         />
 
         <div className="mt-14 grid gap-14 lg:grid-cols-[1fr_0.7fr]">
-          <ol className="relative space-y-10 border-l border-mist-500/15 pl-8">
+          <ol ref={railRef} className="relative space-y-10 border-l border-mist-500/15 pl-8">
+            <motion.span
+              aria-hidden="true"
+              className="absolute -left-px top-0 w-px origin-top bg-gradient-to-b from-accent via-accent-violet to-accent/40"
+              style={{ height: "100%", scaleY: reduce ? 1 : fill }}
+            />
             {journey.map((j, i) => (
               <JourneyItem key={j.org} index={i}>
                 <span className="absolute -left-[2.35rem] top-1.5 h-3 w-3 rounded-full border-2 border-accent bg-ink-950" />

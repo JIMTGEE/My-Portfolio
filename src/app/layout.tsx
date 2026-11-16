@@ -3,6 +3,9 @@ import { Inter, Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
+import { SmoothScroll } from "@/components/SmoothScroll";
+import { Cursor } from "@/components/Cursor";
+import { ScrollProgress } from "@/components/ScrollProgress";
 import { profile } from "@/data/profile";
 import "./globals.css";
 
@@ -104,11 +107,16 @@ export default function RootLayout({
         <a href="#main" className="skip-link">
           Skip to content
         </a>
-        <ThemeProvider>
-          <Nav />
-          <main id="main">{children}</main>
-          <Footer />
-        </ThemeProvider>
+        <div className="grain-overlay" aria-hidden="true" />
+        <SmoothScroll>
+          <ScrollProgress />
+          <Cursor />
+          <ThemeProvider>
+            <Nav />
+            <main id="main">{children}</main>
+            <Footer />
+          </ThemeProvider>
+        </SmoothScroll>
       </body>
     </html>
   );
