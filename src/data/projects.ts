@@ -13,6 +13,9 @@ export type Project = {
   githubUrl?: string;
   image: string;
   featured?: boolean;
+  /** An optional downloadable document for this project — e.g. a client's
+   * own company profile deck — surfaced as a link on the case-study page. */
+  document?: { label: string; href: string };
 };
 
 export const projects: Project[] = [
@@ -35,6 +38,10 @@ export const projects: Project[] = [
     githubUrl: "https://github.com/JIMTGEE/BelieveTC",
     image: "/projects/believetc.svg",
     featured: true,
+    document: {
+      label: "Company profile (PPTX)",
+      href: "/documents/believe-travel-consult-profile.pptx",
+    },
   },
   {
     slug: "queenspa-school",

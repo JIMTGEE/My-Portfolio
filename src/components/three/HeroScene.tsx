@@ -47,8 +47,13 @@ function Scene() {
     []
   );
 
+  // Three nested shells faking a bloom pass — built once and reused rather
+  // than constructed inline in JSX, where they'd otherwise be recreated
+  // (and re-uploaded to the GPU) on every render of this component.
+  const signatureGeometry = useMemo(() => new THREE.IcosahedronGeometry(1.5, 1), []);
+
   const particles = useMemo(() => {
-    const count = 260;
+    const count = 140;
     const positions = new Float32Array(count * 3);
     for (let i = 0; i < count; i++) {
       positions[i * 3] = (Math.random() - 0.5) * 20;
@@ -88,13 +93,13 @@ function Scene() {
           nested wireframe shells at increasing scale / decreasing opacity.
           Cheap stand-in for bloom — no post-processing pass required. */}
       <group ref={signature} position={[0.6, -0.1, -1.2]}>
-        <mesh geometry={new THREE.IcosahedronGeometry(1.5, 1)}>
+        <mesh geometry={signatureGeometry}>
           <meshBasicMaterial color="#caff3f" wireframe transparent opacity={0.55} />
         </mesh>
-        <mesh geometry={new THREE.IcosahedronGeometry(1.5, 1)} scale={1.12}>
+        <mesh geometry={signatureGeometry} scale={1.12}>
           <meshBasicMaterial color="#b06bff" wireframe transparent opacity={0.25} />
         </mesh>
-        <mesh geometry={new THREE.IcosahedronGeometry(1.5, 1)} scale={1.3}>
+        <mesh geometry={signatureGeometry} scale={1.3}>
           <meshBasicMaterial color="#6a52ff" wireframe transparent opacity={0.12} />
         </mesh>
       </group>
@@ -131,8 +136,8 @@ export default function HeroScene() {
   return (
     <div ref={wrapperRef} className="absolute inset-0">
       <Canvas
-        dpr={[1, 1.5]}
-        gl={{ antialias: true, alpha: true, powerPreference: "low-power", preserveDrawingBuffer: true }}
+        dpr={[1, 1.25]}
+        gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
         camera={{ position: [0, 0, 7], fov: 45 }}
         frameloop="always"
         style={{ pointerEvents: "none" }}

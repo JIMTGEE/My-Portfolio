@@ -74,3 +74,39 @@ export const emergingProjects = [
     stage: "concept",
   },
 ];
+
+// Completed, verifiable credentials — kept separate from the courses still
+// in progress below. The underlying certificate PDF is served from
+// /public/documents so "View certificate" links to the real file rather
+// than a claim with nothing behind it.
+export const credentials = [
+  {
+    title: "Microsoft Azure AI Essentials: Workloads and Machine Learning on Azure",
+    issuer: "LinkedIn Learning",
+    date: "September 2026",
+    duration: "3h 23m",
+    topSkills: ["Machine Learning", "Azure AI Foundry", "Artificial Intelligence (AI)"],
+    fileHref: "/documents/azure-ai-essentials-certificate.pdf",
+  },
+];
+
+// A course actually in progress right now, with real per-skill XP pulled
+// straight from the Coursera skills tracker — not a polished "proficiency"
+// claim, just an honest, small-numbers snapshot of where things stand.
+export const courseProgress = {
+  title: "Crash Course on Python",
+  platform: "Coursera",
+  currentModule: "Basic Python Syntax — Week 2",
+  href: "https://www.coursera.org/learn/python-crash-course/home/module/2",
+  skills: [
+    { name: "Foundational Programming", xp: 243, max: 1000 },
+    { name: "Statistical Modeling and Inference", xp: 38, max: 1200 },
+    { name: "System Security and Automation Management", xp: 23, max: 700 },
+    { name: "Systematic Debugging, Testing & Quality Assurance", xp: 16, max: 700 },
+    { name: "Machine Learning Foundations", xp: 10, max: 500 },
+    { name: "Scripting and API Automation for IT Operations", xp: 9, max: 600 },
+    { name: "Automation Scripting for IT Ops & System Management", xp: 6, max: 400 },
+    { name: "Data Cleaning and Preparation", xp: 3, max: 500 },
+    { name: "Work Planning and Professional Execution", xp: 2, max: 700 },
+  ],
+};

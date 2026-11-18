@@ -1,42 +1,42 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" role="img" aria-label="CIUG">
+
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#0a0e18"/>
-      <stop offset="100%" stop-color="#05070d"/>
+      <stop offset="0%" stop-color="#0b0d16"/>
+      <stop offset="100%" stop-color="#030408"/>
     </linearGradient>
-    <radialGradient id="glow" cx="22%" cy="24%" r="60%">
-      <stop offset="0%" stop-color="#8b6bff" stop-opacity="0.35"/>
-      <stop offset="100%" stop-color="#8b6bff" stop-opacity="0"/>
+    <radialGradient id="glow" cx="20%" cy="18%" r="65%">
+      <stop offset="0%" stop-color="#6a52ff" stop-opacity="0.30"/>
+      <stop offset="55%" stop-color="#caff3f" stop-opacity="0.07"/>
+      <stop offset="100%" stop-color="#6a52ff" stop-opacity="0"/>
     </radialGradient>
-    <pattern id="grid" width="36" height="36" patternUnits="userSpaceOnUse">
-      <path d="M 36 0 L 0 0 0 36" fill="none" stroke="#c9cfdf" stroke-width="1" opacity="0.06"/>
+    <pattern id="grid" width="34" height="34" patternUnits="userSpaceOnUse">
+      <path d="M 34 0 L 0 0 0 34" fill="none" stroke="#c7c6dc" stroke-width="1" opacity="0.05"/>
     </pattern>
     <linearGradient id="fade" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="55%" stop-color="#05070d" stop-opacity="0"/>
-      <stop offset="100%" stop-color="#05070d" stop-opacity="0.55"/>
+      <stop offset="40%" stop-color="#030408" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#030408" stop-opacity="0.6"/>
     </linearGradient>
   </defs>
-
   <rect width="800" height="500" fill="url(#bg)"/>
   <rect width="800" height="500" fill="url(#grid)"/>
   <rect width="800" height="500" fill="url(#glow)"/>
-  <circle cx="532.6" cy="386.3" r="1.77" fill="#c9cfdf" opacity="0.35"/><circle cx="426.1" cy="370.8" r="1.76" fill="#c9cfdf" opacity="0.10"/><circle cx="235.2" cy="57.9" r="0.69" fill="#c9cfdf" opacity="0.34"/><circle cx="471.8" cy="375.4" r="1.78" fill="#c9cfdf" opacity="0.40"/><circle cx="420.7" cy="467.0" r="1.51" fill="#c9cfdf" opacity="0.14"/><circle cx="416.5" cy="480.7" r="1.76" fill="#c9cfdf" opacity="0.24"/><circle cx="356.2" cy="474.3" r="0.55" fill="#c9cfdf" opacity="0.37"/><circle cx="68.8" cy="181.5" r="1.75" fill="#c9cfdf" opacity="0.14"/><circle cx="301.1" cy="42.4" r="0.77" fill="#c9cfdf" opacity="0.10"/><circle cx="760.8" cy="303.3" r="1.68" fill="#c9cfdf" opacity="0.10"/><circle cx="623.3" cy="366.8" r="1.32" fill="#c9cfdf" opacity="0.14"/><circle cx="355.8" cy="303.4" r="0.67" fill="#c9cfdf" opacity="0.42"/><circle cx="196.0" cy="116.8" r="1.21" fill="#c9cfdf" opacity="0.22"/><circle cx="238.1" cy="200.1" r="0.87" fill="#c9cfdf" opacity="0.32"/><circle cx="193.0" cy="424.0" r="0.52" fill="#c9cfdf" opacity="0.23"/><circle cx="214.8" cy="378.8" r="0.61" fill="#c9cfdf" opacity="0.14"/><circle cx="164.4" cy="355.7" r="1.16" fill="#c9cfdf" opacity="0.11"/><circle cx="113.3" cy="332.6" r="1.62" fill="#c9cfdf" opacity="0.37"/><circle cx="725.9" cy="328.4" r="1.50" fill="#c9cfdf" opacity="0.33"/><circle cx="33.8" cy="65.1" r="0.52" fill="#c9cfdf" opacity="0.23"/><circle cx="588.4" cy="194.4" r="0.66" fill="#c9cfdf" opacity="0.29"/><circle cx="658.4" cy="258.9" r="1.12" fill="#c9cfdf" opacity="0.13"/><circle cx="608.8" cy="26.1" r="0.54" fill="#c9cfdf" opacity="0.30"/><circle cx="51.5" cy="208.0" r="0.57" fill="#c9cfdf" opacity="0.38"/><circle cx="360.8" cy="196.2" r="1.96" fill="#c9cfdf" opacity="0.30"/><circle cx="128.4" cy="436.7" r="1.51" fill="#c9cfdf" opacity="0.27"/>
 
-  <!-- corner frame accents -->
-  <path d="M40 40 h48 M40 40 v48" stroke="#8b6bff" stroke-width="2" opacity="0.5" fill="none"/>
-  <path d="M760 460 h-48 M760 460 v-48" stroke="#8b6bff" stroke-width="2" opacity="0.5" fill="none"/>
 
-  <!-- icon badge -->
-  <g transform="translate(88,150)">
-    <rect x="-34" y="-34" width="136" height="136" rx="30" fill="#121929" stroke="#8b6bff" stroke-opacity="0.35"/>
-    <g transform="translate(0,0) scale(2.6)" stroke="#8b6bff" stroke-width="1.15" fill="none" stroke-linecap="round" stroke-linejoin="round" transform-origin="0 0">
-      <g transform="translate(-12,-12)"><path d="M3 21h18"/><path d="M5 21V9l7-5 7 5v12"/><path d="M9 21v-6h6v6"/><path d="M9 9h.01M12 9h.01M15 9h.01M9 12.5h.01M15 12.5h.01"/></g>
-    </g>
-  </g>
+  <rect x="0" y="0" width="800" height="46" fill="#0d0f1c"/>
+  <rect x="0" y="45" width="800" height="1" fill="#1c1f33"/>
+  <circle cx="26" cy="23" r="6" fill="#ff5f57"/>
+  <circle cx="46" cy="23" r="6" fill="#febc2e"/>
+  <circle cx="66" cy="23" r="6" fill="#28c840"/>
+  <rect x="96" y="13" width="142" height="20" rx="10" fill="#171a2c" stroke="#2a2d47" stroke-width="1"/>
+  <circle cx="110" cy="23" r="4.5" fill="none" stroke="#6c7191" stroke-width="1.3"/>
+  <path d="M113.2 26.2 L117 30" stroke="#6c7191" stroke-width="1.3" stroke-linecap="round"/>
+  <text x="124" y="27" font-family="Inter, sans-serif" font-size="11" fill="#9599b5">ci-ug.com</text>
 
-  <rect x="56" y="330" width="46" height="3" rx="1.5" fill="#8b6bff"/>
-  <text x="56" y="376" font-family="Space Grotesk, Inter, sans-serif" font-size="34" font-weight="600" fill="#f5f7fb">CIUG</text>
-  <text x="56" y="406" font-family="Inter, sans-serif" font-size="16" letter-spacing="0.04em" fill="#717c9b">CONFUCIUS INSTITUTE, UG</text>
+<rect x="40" y="160" width="164" height="130" rx="10" fill="#0e1120" stroke="#232745"/><circle cx="68" cy="188" r="12" fill="none" stroke="#b06bff" stroke-width="1.6"/><text x="56" y="222" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#c7c6dc">HSK Testing</text><text x="56" y="242" font-family="Inter, sans-serif" font-size="10" fill="#6c7191">Standardized Chinese proficiency</text><text x="56" y="256" font-family="Inter, sans-serif" font-size="10" fill="#6c7191">exams</text><rect x="220" y="160" width="164" height="130" rx="10" fill="#0e1120" stroke="#232745"/><circle cx="248" cy="188" r="12" fill="none" stroke="#b06bff" stroke-width="1.6"/><text x="236" y="222" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#c7c6dc">Scholarships</text><text x="236" y="242" font-family="Inter, sans-serif" font-size="10" fill="#6c7191">Pathways to study</text><text x="236" y="256" font-family="Inter, sans-serif" font-size="10" fill="#6c7191">in China</text><rect x="400" y="160" width="164" height="130" rx="10" fill="#0e1120" stroke="#232745"/><circle cx="428" cy="188" r="12" fill="none" stroke="#b06bff" stroke-width="1.6"/><text x="416" y="222" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#c7c6dc">Cultural Events</text><text x="416" y="242" font-family="Inter, sans-serif" font-size="10" fill="#6c7191">Language &amp; culture</text><text x="416" y="256" font-family="Inter, sans-serif" font-size="10" fill="#6c7191">programming</text><rect x="40" y="126" width="120" height="22" rx="11" fill="#12152a" stroke="#caff3f" stroke-opacity="0.4"/><text x="100" y="141" font-family="Inter, sans-serif" font-size="10" fill="#caff3f" text-anchor="middle">EN · 中文</text>
 
   <rect width="800" height="500" fill="url(#fade)"/>
+  <text x="40" y="454" font-family="Space Grotesk, Inter, sans-serif" font-size="26" font-weight="600" fill="#f5f7fb">CIUG</text>
+  <text x="40" y="478" font-family="Inter, sans-serif" font-size="13" letter-spacing="0.08em" fill="#6c7191">CONFUCIUS INSTITUTE AT THE UNIVERSITY OF GHANA</text>
+
 </svg>

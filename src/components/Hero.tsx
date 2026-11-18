@@ -6,7 +6,7 @@ import { useGSAP } from "@/lib/useGSAP";
 import { useMotionCapability } from "@/lib/useMotionCapability";
 import { useMagnetic } from "@/lib/useMagnetic";
 import { motion } from "framer-motion";
-import { ArrowRight, Github, MapPin } from "lucide-react";
+import { ArrowRight, Github, Linkedin, MapPin } from "lucide-react";
 import { profile } from "@/data/profile";
 import { AvatarMark } from "./AvatarMark";
 
@@ -247,6 +247,16 @@ export function Hero() {
             >
               <Github size={14} /> github.com/JIMTGEE
             </a>
+            {profile.socials.linkedin && (
+              <a
+                href={profile.socials.linkedin}
+                target="_blank"
+                rel="noreferrer"
+                className="focus-ring inline-flex items-center gap-1.5 transition hover:text-accent"
+              >
+                <Linkedin size={14} /> LinkedIn
+              </a>
+            )}
           </motion.div>
         </div>
 

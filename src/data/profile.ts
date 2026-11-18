@@ -23,10 +23,10 @@ export const profile = {
   githubUsername: "JIMTGEE",
   socials: {
     github: "https://github.com/JIMTGEE",
-    // TODO (Tohybu): add your real LinkedIn URL, public contact email and
-    // (optional) WhatsApp number — the Contact section and footer quietly
-    // omit any of these that are left blank rather than showing a dead link.
-    linkedin: "",
+    linkedin: "https://www.linkedin.com/in/tohybu-tajudeen-694192283",
+    // TODO (Tohybu): add your public contact email and (optional) WhatsApp
+    // number — the Contact section and footer quietly omit either of these
+    // while left blank rather than showing a dead link.
     email: "",
     whatsapp: "",
     jihope: "https://jihope.tech",

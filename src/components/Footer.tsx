@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowUp, Github } from "lucide-react";
+import { ArrowUp, Github, Linkedin } from "lucide-react";
 import { profile } from "@/data/profile";
 
 const links = [
@@ -22,14 +22,26 @@ export function Footer() {
             {profile.name}
           </p>
           <p className="mt-1 text-sm text-mist-500">{profile.title} — {profile.location}</p>
-          <a
-            href={profile.socials.github}
-            target="_blank"
-            rel="noreferrer"
-            className="focus-ring mt-4 inline-flex items-center gap-2 text-sm text-mist-400 transition hover:text-accent"
-          >
-            <Github size={16} /> github.com/JIMTGEE
-          </a>
+          <div className="mt-4 flex items-center gap-5">
+            <a
+              href={profile.socials.github}
+              target="_blank"
+              rel="noreferrer"
+              className="focus-ring inline-flex items-center gap-2 text-sm text-mist-400 transition hover:text-accent"
+            >
+              <Github size={16} /> github.com/JIMTGEE
+            </a>
+            {profile.socials.linkedin && (
+              <a
+                href={profile.socials.linkedin}
+                target="_blank"
+                rel="noreferrer"
+                className="focus-ring inline-flex items-center gap-2 text-sm text-mist-400 transition hover:text-accent"
+              >
+                <Linkedin size={16} /> LinkedIn
+              </a>
+            )}
+          </div>
         </div>
 
         <nav className="flex flex-wrap gap-x-8 gap-y-3 text-sm" aria-label="Footer">

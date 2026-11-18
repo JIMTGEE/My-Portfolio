@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ArrowUpRight, Github } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, Download, Github } from "lucide-react";
 import { projects } from "@/data/projects";
 import { RevealOnScroll } from "@/components/RevealOnScroll";
 
@@ -90,6 +90,15 @@ export default function ProjectPage({
                 className="focus-ring inline-flex items-center gap-2 rounded-full border border-mist-500/25 px-5 py-2.5 text-sm font-semibold text-mist-100 transition hover:border-accent/50 hover:text-accent"
               >
                 <Github size={14} /> View source
+              </a>
+            )}
+            {project.document && (
+              <a
+                href={project.document.href}
+                download
+                className="focus-ring inline-flex items-center gap-2 rounded-full border border-mist-500/25 px-5 py-2.5 text-sm font-semibold text-mist-100 transition hover:border-accent/50 hover:text-accent"
+              >
+                <Download size={14} /> {project.document.label}
               </a>
             )}
             <span className="rounded-full border border-mist-500/20 px-3 py-1.5 text-xs text-mist-400">

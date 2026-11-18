@@ -1,42 +1,42 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" role="img" aria-label="EduSync">
+
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#0a0e18"/>
-      <stop offset="100%" stop-color="#05070d"/>
+      <stop offset="0%" stop-color="#0b0d16"/>
+      <stop offset="100%" stop-color="#030408"/>
     </linearGradient>
-    <radialGradient id="glow" cx="22%" cy="24%" r="60%">
-      <stop offset="0%" stop-color="#36d399" stop-opacity="0.35"/>
-      <stop offset="100%" stop-color="#36d399" stop-opacity="0"/>
+    <radialGradient id="glow" cx="20%" cy="18%" r="65%">
+      <stop offset="0%" stop-color="#6a52ff" stop-opacity="0.30"/>
+      <stop offset="55%" stop-color="#caff3f" stop-opacity="0.07"/>
+      <stop offset="100%" stop-color="#6a52ff" stop-opacity="0"/>
     </radialGradient>
-    <pattern id="grid" width="36" height="36" patternUnits="userSpaceOnUse">
-      <path d="M 36 0 L 0 0 0 36" fill="none" stroke="#c9cfdf" stroke-width="1" opacity="0.06"/>
+    <pattern id="grid" width="34" height="34" patternUnits="userSpaceOnUse">
+      <path d="M 34 0 L 0 0 0 34" fill="none" stroke="#c7c6dc" stroke-width="1" opacity="0.05"/>
     </pattern>
     <linearGradient id="fade" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="55%" stop-color="#05070d" stop-opacity="0"/>
-      <stop offset="100%" stop-color="#05070d" stop-opacity="0.55"/>
+      <stop offset="40%" stop-color="#030408" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#030408" stop-opacity="0.6"/>
     </linearGradient>
   </defs>
-
   <rect width="800" height="500" fill="url(#bg)"/>
   <rect width="800" height="500" fill="url(#grid)"/>
   <rect width="800" height="500" fill="url(#glow)"/>
-  <circle cx="734.8" cy="358.0" r="1.02" fill="#c9cfdf" opacity="0.29"/><circle cx="479.1" cy="499.4" r="1.60" fill="#c9cfdf" opacity="0.28"/><circle cx="519.7" cy="157.1" r="1.64" fill="#c9cfdf" opacity="0.31"/><circle cx="782.6" cy="350.6" r="1.62" fill="#c9cfdf" opacity="0.14"/><circle cx="494.3" cy="115.8" r="1.54" fill="#c9cfdf" opacity="0.13"/><circle cx="64.6" cy="356.8" r="1.29" fill="#c9cfdf" opacity="0.43"/><circle cx="263.7" cy="186.1" r="1.92" fill="#c9cfdf" opacity="0.35"/><circle cx="507.4" cy="102.2" r="0.78" fill="#c9cfdf" opacity="0.16"/><circle cx="167.9" cy="156.9" r="1.31" fill="#c9cfdf" opacity="0.18"/><circle cx="718.9" cy="280.3" r="1.19" fill="#c9cfdf" opacity="0.37"/><circle cx="343.2" cy="148.3" r="0.89" fill="#c9cfdf" opacity="0.39"/><circle cx="219.3" cy="311.9" r="0.54" fill="#c9cfdf" opacity="0.12"/><circle cx="520.1" cy="190.0" r="1.69" fill="#c9cfdf" opacity="0.08"/><circle cx="544.2" cy="348.2" r="0.70" fill="#c9cfdf" opacity="0.11"/><circle cx="5.8" cy="331.1" r="0.81" fill="#c9cfdf" opacity="0.36"/><circle cx="59.6" cy="237.9" r="0.45" fill="#c9cfdf" opacity="0.38"/><circle cx="143.9" cy="406.2" r="1.81" fill="#c9cfdf" opacity="0.12"/><circle cx="372.3" cy="104.0" r="1.74" fill="#c9cfdf" opacity="0.26"/><circle cx="626.6" cy="492.1" r="1.49" fill="#c9cfdf" opacity="0.16"/><circle cx="137.1" cy="221.5" r="0.93" fill="#c9cfdf" opacity="0.26"/><circle cx="450.7" cy="24.8" r="0.46" fill="#c9cfdf" opacity="0.39"/><circle cx="124.0" cy="274.8" r="1.65" fill="#c9cfdf" opacity="0.24"/><circle cx="625.2" cy="385.4" r="1.47" fill="#c9cfdf" opacity="0.23"/><circle cx="30.8" cy="499.9" r="1.09" fill="#c9cfdf" opacity="0.39"/><circle cx="581.8" cy="283.0" r="0.79" fill="#c9cfdf" opacity="0.18"/><circle cx="72.0" cy="111.1" r="1.76" fill="#c9cfdf" opacity="0.41"/>
 
-  <!-- corner frame accents -->
-  <path d="M40 40 h48 M40 40 v48" stroke="#36d399" stroke-width="2" opacity="0.5" fill="none"/>
-  <path d="M760 460 h-48 M760 460 v-48" stroke="#36d399" stroke-width="2" opacity="0.5" fill="none"/>
 
-  <!-- icon badge -->
-  <g transform="translate(88,150)">
-    <rect x="-34" y="-34" width="136" height="136" rx="30" fill="#121929" stroke="#36d399" stroke-opacity="0.35"/>
-    <g transform="translate(0,0) scale(2.6)" stroke="#36d399" stroke-width="1.15" fill="none" stroke-linecap="round" stroke-linejoin="round" transform-origin="0 0">
-      <g transform="translate(-12,-12)"><path d="M12 3 1 9l11 6 9-4.9V17"/><path d="M5 10.5V16c0 1.5 3 3 7 3s7-1.5 7-3v-5.5"/></g>
-    </g>
-  </g>
+  <rect x="0" y="0" width="800" height="46" fill="#0d0f1c"/>
+  <rect x="0" y="45" width="800" height="1" fill="#1c1f33"/>
+  <circle cx="26" cy="23" r="6" fill="#ff5f57"/>
+  <circle cx="46" cy="23" r="6" fill="#febc2e"/>
+  <circle cx="66" cy="23" r="6" fill="#28c840"/>
+  <rect x="96" y="13" width="260" height="20" rx="10" fill="#171a2c" stroke="#2a2d47" stroke-width="1"/>
+  <circle cx="110" cy="23" r="4.5" fill="none" stroke="#6c7191" stroke-width="1.3"/>
+  <path d="M113.2 26.2 L117 30" stroke="#6c7191" stroke-width="1.3" stroke-linecap="round"/>
+  <text x="124" y="27" font-family="Inter, sans-serif" font-size="11" fill="#9599b5">github.com/JIMTGEE/EDUSYNC</text>
 
-  <rect x="56" y="330" width="46" height="3" rx="1.5" fill="#36d399"/>
-  <text x="56" y="376" font-family="Space Grotesk, Inter, sans-serif" font-size="34" font-weight="600" fill="#f5f7fb">EduSync</text>
-  <text x="56" y="406" font-family="Inter, sans-serif" font-size="16" letter-spacing="0.04em" fill="#717c9b">ADMISSIONS &amp; ADMINISTRATION</text>
+<text x="40" y="88" font-family="Inter, sans-serif" font-size="11" font-weight="600" fill="#9599b5">ADMISSIONS PIPELINE</text><rect x="40" y="104" width="150" height="210" rx="10" fill="#0e1120" stroke="#232745"/><text x="54" y="128" font-family="Inter, sans-serif" font-size="11" font-weight="600" fill="#c7c6dc">New applications</text><rect x="50" y="144" width="130" height="34" rx="7" fill="#161a30" stroke="#262a48"/><text x="60" y="165" font-family="Inter, sans-serif" font-size="10" fill="#9599b5">A. Mensah</text><rect x="50" y="186" width="130" height="34" rx="7" fill="#161a30" stroke="#262a48"/><text x="60" y="207" font-family="Inter, sans-serif" font-size="10" fill="#9599b5">K. Owusu</text><rect x="50" y="228" width="130" height="34" rx="7" fill="#161a30" stroke="#262a48"/><text x="60" y="249" font-family="Inter, sans-serif" font-size="10" fill="#9599b5">S. Darko</text><rect x="206" y="104" width="150" height="210" rx="10" fill="#0e1120" stroke="#232745"/><text x="220" y="128" font-family="Inter, sans-serif" font-size="11" font-weight="600" fill="#c7c6dc">Under review</text><rect x="216" y="144" width="130" height="34" rx="7" fill="#161a30" stroke="#262a48"/><text x="226" y="165" font-family="Inter, sans-serif" font-size="10" fill="#9599b5">F. Asante</text><rect x="216" y="186" width="130" height="34" rx="7" fill="#161a30" stroke="#262a48"/><text x="226" y="207" font-family="Inter, sans-serif" font-size="10" fill="#9599b5">P. Boateng</text><rect x="372" y="104" width="150" height="210" rx="10" fill="#0e1120" stroke="#232745"/><text x="386" y="128" font-family="Inter, sans-serif" font-size="11" font-weight="600" fill="#c7c6dc">Accepted</text><rect x="382" y="144" width="130" height="34" rx="7" fill="#161a30" stroke="#262a48"/><text x="392" y="165" font-family="Inter, sans-serif" font-size="10" fill="#9599b5">J. Owusu</text>
 
   <rect width="800" height="500" fill="url(#fade)"/>
+  <text x="40" y="454" font-family="Space Grotesk, Inter, sans-serif" font-size="26" font-weight="600" fill="#f5f7fb">EduSync</text>
+  <text x="40" y="478" font-family="Inter, sans-serif" font-size="13" letter-spacing="0.08em" fill="#6c7191">SCHOOL ADMINISTRATION PLATFORM</text>
+
 </svg>
