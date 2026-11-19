@@ -53,7 +53,7 @@ function Scene() {
   const signatureGeometry = useMemo(() => new THREE.IcosahedronGeometry(1.5, 1), []);
 
   const particles = useMemo(() => {
-    const count = 140;
+    const count = 90;
     const positions = new Float32Array(count * 3);
     for (let i = 0; i < count; i++) {
       positions[i * 3] = (Math.random() - 0.5) * 20;
@@ -136,8 +136,8 @@ export default function HeroScene() {
   return (
     <div ref={wrapperRef} className="absolute inset-0">
       <Canvas
-        dpr={[1, 1.25]}
-        gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
+        dpr={1}
+        gl={{ antialias: false, alpha: true, powerPreference: "high-performance" }}
         camera={{ position: [0, 0, 7], fov: 45 }}
         frameloop="always"
         style={{ pointerEvents: "none" }}

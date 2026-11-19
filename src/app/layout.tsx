@@ -1,5 +1,23 @@
 import type { Metadata } from "next";
-import { Inter, Space_Grotesk, JetBrains_Mono } from "next/font/google";
+// Self-hosted via @fontsource rather than next/font/google: next/font/google
+// fetches the actual font files from fonts.gstatic.com *during the Docker
+// build itself*, and Render's build network can't reliably reach it — that
+// network failure doesn't degrade gracefully, it throws a raw TypeError
+// inside Next's font loader and fails the whole build (confirmed from a
+// real Render build log: "request to https://fonts.gstatic.com/... failed"
+// followed by "Cannot read properties of null (reading '1')" in
+// @next/font/dist/google/loader.js). @fontsource ships the woff2 files
+// straight from npm at install time, so there's no network call at build
+// time at all, in any environment.
+import "@fontsource/inter/400.css";
+import "@fontsource/inter/500.css";
+import "@fontsource/inter/600.css";
+import "@fontsource/inter/700.css";
+import "@fontsource/space-grotesk/500.css";
+import "@fontsource/space-grotesk/600.css";
+import "@fontsource/space-grotesk/700.css";
+import "@fontsource/jetbrains-mono/400.css";
+import "@fontsource/jetbrains-mono/500.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
@@ -9,25 +27,6 @@ import { ScrollProgress } from "@/components/ScrollProgress";
 import { Intro } from "@/components/Intro";
 import { profile } from "@/data/profile";
 import "./globals.css";
-
-const inter = Inter({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-sans",
-  display: "swap",
-});
-const spaceGrotesk = Space_Grotesk({
-  subsets: ["latin"],
-  weight: ["500", "600", "700"],
-  variable: "--font-display",
-  display: "swap",
-});
-const jetBrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
-  weight: ["400", "500"],
-  variable: "--font-mono",
-  display: "swap",
-});
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://tohybu.dev";
 
@@ -93,11 +92,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html
-      lang="en"
-      suppressHydrationWarning
-      className={`${inter.variable} ${spaceGrotesk.variable} ${jetBrainsMono.variable}`}
-    >
+    <html lang="en" suppressHydrationWarning>
       <head>
         <script
           type="application/ld+json"
