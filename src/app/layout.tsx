@@ -59,9 +59,11 @@ export const metadata: Metadata = {
     title: `${profile.name} — ${profile.title}`,
     description: profile.heroIntro,
   },
-  icons: {
-    icon: "/favicon.svg",
-  },
+  // No explicit icon list here on purpose: src/app/icon.png and
+  // src/app/apple-icon.png (the real JIHOPE Tech "JH" mark, cropped from
+  // the logo the client provided) are Next's file-convention icons, and
+  // Next generates the correct <link rel="icon">/apple-touch-icon tags
+  // for those automatically — a manual override here would just fight it.
 };
 
 const jsonLd = {

@@ -59,8 +59,13 @@ export function Cursor() {
     };
 
     const loop = () => {
-      ring.x += (pointer.x - ring.x) * 0.18;
-      ring.y += (pointer.y - ring.y) * 0.18;
+      // Was 0.18 — closing an 18%-per-frame gap takes ~190ms to feel
+      // "caught up," which reads as sluggish/unresponsive rather than a
+      // tasteful trailing effect. 0.4 keeps a touch of the lead-dot/
+      // trailing-ring look without the ring visibly lagging behind fast
+      // mouse movement.
+      ring.x += (pointer.x - ring.x) * 0.4;
+      ring.y += (pointer.y - ring.y) * 0.4;
 
       if (dotRef.current) {
         dotRef.current.style.transform = `translate3d(${pointer.x}px, ${pointer.y}px, 0) translate(-50%, -50%)`;
