@@ -170,19 +170,31 @@ html.has-custom-cursor textarea {
 }
 
 /* Soft, saturated glow halo — the one "unapologetically bold" lighting
-   effect in the palette. Blurred enough that it reads as atmosphere, not a
-   shape, and reused behind the hero, section kickers, and the intro
-   sequence so the accent glow feels like a running motif rather than a
-   one-off. */
+   effect in the palette. Reads as atmosphere, not a shape, and reused
+   behind the hero, section kickers, and the intro sequence so the accent
+   glow feels like a running motif rather than a one-off.
+   Deliberately no `filter: blur()` here any more. The two instances
+   behind the hero copy are both continuously CSS-animated (scale/opacity,
+   forever, for as long as Hero is mounted — which is the whole time
+   someone is on the page) *and* GSAP-scroll-transformed as a parallax
+   layer, so the browser was re-running a 90px blur over a ~500px box on
+   every single scroll/animation frame — a textbook cause of exactly the
+   "scrolling feels slow" complaint, and a GPU-bound one that a JS long-
+   task benchmark won't surface, unlike the backdrop-filter cost already
+   fixed on .glass-panel above. The extra gradient stops below fake the
+   same soft falloff with a plain radial-gradient, which the compositor
+   can scale/fade as a cached layer instead of re-blurring from scratch. */
 .ambient-glow {
   pointer-events: none;
   border-radius: 9999px;
-  filter: blur(90px);
   background: radial-gradient(
     circle,
-    rgba(106, 82, 255, 0.55),
-    rgba(202, 255, 63, 0.18) 55%,
-    transparent 75%
+    rgba(106, 82, 255, 0.45) 0%,
+    rgba(120, 93, 255, 0.34) 18%,
+    rgba(154, 110, 255, 0.24) 34%,
+    rgba(202, 255, 63, 0.16) 52%,
+    rgba(202, 255, 63, 0.06) 68%,
+    transparent 82%
   );
 }
 

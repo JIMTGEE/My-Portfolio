@@ -159,9 +159,15 @@ function VisibilityGate({ targetRef }: { targetRef: React.RefObject<HTMLDivEleme
     const el = targetRef.current;
     if (!el) return;
 
+    // A shrunk root (rootMargin's bottom value) means this counts as
+    // "not intersecting" — and the render loop pauses — once the hero
+    // has scrolled to roughly the top half of the viewport, rather than
+    // only once it's fully gone. That hands the GPU back during the
+    // scroll-past transition itself, which is exactly when it was
+    // competing hardest with the scroll for frame budget.
     const io = new IntersectionObserver(
       ([entry]) => setFrameloop(entry.isIntersecting ? "always" : "demand"),
-      { threshold: 0 }
+      { threshold: 0, rootMargin: "0px 0px -50% 0px" }
     );
     io.observe(el);
 

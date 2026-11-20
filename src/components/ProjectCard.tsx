@@ -57,11 +57,15 @@ export function ProjectCard({
           >
             {num}
           </span>
-          <span className="absolute left-3 top-3 rounded-full border border-mist-500/20 bg-ink-950/70 px-2.5 py-1 text-[11px] font-medium text-mist-300 backdrop-blur">
+          {/* Solid-enough background instead of backdrop-blur — this badge
+              repeats on every card in the grid, and backdrop-filter forces a
+              live resample of whatever's behind it on every scroll frame,
+              same reasoning as .glass-panel in globals.css. */}
+          <span className="absolute left-3 top-3 rounded-full border border-mist-500/20 bg-ink-950/90 px-2.5 py-1 text-[11px] font-medium text-mist-300">
             {project.category}
           </span>
           {project.status === "In development" && (
-            <span className="absolute right-3 top-3 rounded-full border border-accent/30 bg-accent/10 px-2.5 py-1 text-[11px] font-medium text-accent-soft backdrop-blur">
+            <span className="absolute right-3 top-3 rounded-full border border-accent/40 bg-ink-950/80 px-2.5 py-1 text-[11px] font-medium text-accent-soft">
               In development
             </span>
           )}
