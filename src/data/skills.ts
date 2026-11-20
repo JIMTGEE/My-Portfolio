@@ -90,23 +90,71 @@ export const credentials = [
   },
 ];
 
-// A course actually in progress right now, with real per-skill XP pulled
-// straight from the Coursera skills tracker — not a polished "proficiency"
-// claim, just an honest, small-numbers snapshot of where things stand.
-export const courseProgress = {
-  title: "Crash Course on Python",
-  platform: "Coursera",
-  currentModule: "Basic Python Syntax — Week 2",
-  href: "https://www.coursera.org/learn/python-crash-course/home/module/2",
-  skills: [
-    { name: "Foundational Programming", xp: 243, max: 1000 },
-    { name: "Statistical Modeling and Inference", xp: 38, max: 1200 },
-    { name: "System Security and Automation Management", xp: 23, max: 700 },
-    { name: "Systematic Debugging, Testing & Quality Assurance", xp: 16, max: 700 },
-    { name: "Machine Learning Foundations", xp: 10, max: 500 },
-    { name: "Scripting and API Automation for IT Operations", xp: 9, max: 600 },
-    { name: "Automation Scripting for IT Ops & System Management", xp: 6, max: 400 },
-    { name: "Data Cleaning and Preparation", xp: 3, max: 500 },
-    { name: "Work Planning and Professional Execution", xp: 2, max: 700 },
-  ],
-};
+// Courses actually in progress right now — real, honest snapshots pulled
+// straight from each platform's own tracker, not polished "proficiency"
+// claims. Two different platforms track progress differently (Coursera's
+// skill-XP system vs. IBM/CognitiveClass's per-module review-question
+// scores + weighted grade), so each entry carries its own shape rather
+// than forcing one into the other's mold.
+export type SkillXpEntry = { name: string; xp: number; max: number };
+export type ModuleScoreEntry = { name: string; correct: number; total: number; complete: boolean };
+
+export type CourseProgressEntry =
+  | {
+      kind: "skills";
+      title: string;
+      platform: string;
+      currentModule: string;
+      href: string;
+      skills: SkillXpEntry[];
+    }
+  | {
+      kind: "modules";
+      title: string;
+      platform: string;
+      currentModule: string;
+      href: string;
+      completionPct: number;
+      weightedGrade: number;
+      passingGrade: number;
+      modules: ModuleScoreEntry[];
+    };
+
+export const courseProgress: CourseProgressEntry[] = [
+  {
+    kind: "skills",
+    title: "Crash Course on Python",
+    platform: "Coursera",
+    currentModule: "Basic Python Syntax — Week 2",
+    href: "https://www.coursera.org/learn/python-crash-course/home/module/2",
+    skills: [
+      { name: "Foundational Programming", xp: 243, max: 1000 },
+      { name: "Statistical Modeling and Inference", xp: 38, max: 1200 },
+      { name: "System Security and Automation Management", xp: 23, max: 700 },
+      { name: "Systematic Debugging, Testing & Quality Assurance", xp: 16, max: 700 },
+      { name: "Machine Learning Foundations", xp: 10, max: 500 },
+      { name: "Scripting and API Automation for IT Operations", xp: 9, max: 600 },
+      { name: "Automation Scripting for IT Ops & System Management", xp: 6, max: 400 },
+      { name: "Data Cleaning and Preparation", xp: 3, max: 500 },
+      { name: "Work Planning and Professional Execution", xp: 2, max: 700 },
+    ],
+  },
+  {
+    kind: "modules",
+    title: "Python for Data Science (PY0101EN)",
+    platform: "IBM / CognitiveClass",
+    currentModule: "Module 2 — Python Data Structures",
+    href: "https://courses.cognitiveclass.ai/courses/course-v1:CognitiveClass+PY0101EN+v3/course/",
+    completionPct: 31,
+    weightedGrade: 10,
+    passingGrade: 60,
+    modules: [
+      { name: "Module 1 — Python Basics", correct: 5, total: 5, complete: true },
+      { name: "Module 2 — Python Data Structures", correct: 0, total: 5, complete: false },
+      { name: "Module 3 — Python Programming Fundamentals", correct: 0, total: 5, complete: false },
+      { name: "Module 4 — Working with Data in Python", correct: 0, total: 4, complete: false },
+      { name: "Module 5 — Working with Numpy Arrays & Simple APIs", correct: 0, total: 4, complete: false },
+      { name: "Final Exam", correct: 0, total: 25, complete: false },
+    ],
+  },
+];

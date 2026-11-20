@@ -185,6 +185,8 @@ export function GitHubSection() {
                   <img
                     src={state.user.avatar_url}
                     alt={`${state.user.login}'s GitHub avatar`}
+                    loading="lazy"
+                    decoding="async"
                     className="h-14 w-14 rounded-full border border-mist-500/15"
                   />
                   <a

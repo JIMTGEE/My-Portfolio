@@ -97,55 +97,125 @@ export function AIFocus() {
             </div>
           </RevealOnScroll>
 
-          <RevealOnScroll delay={0.18} className="glass-panel rounded-2xl p-6">
-            <div className="flex items-center justify-between gap-3">
-              <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-mist-500">
-                <GraduationCap size={14} /> In progress — {courseProgress.platform}
-              </div>
-              <a
-                href={courseProgress.href}
-                target="_blank"
-                rel="noreferrer"
-                className="focus-ring inline-flex items-center gap-1 text-[11px] font-medium text-accent-soft transition hover:text-accent"
+          <div className="flex flex-col gap-6">
+            {courseProgress.map((course, ci) => (
+              <RevealOnScroll
+                key={course.title}
+                delay={0.18 + ci * 0.06}
+                className="glass-panel rounded-2xl p-6"
               >
-                {courseProgress.currentModule} <ExternalLink size={11} />
-              </a>
-            </div>
-            <p className="mt-3 font-display text-sm font-semibold text-mist-100">
-              {courseProgress.title}
-            </p>
-            <p className="mt-1 text-xs text-mist-400">
-              Live skill XP from Coursera — small numbers, honestly shown, not a proficiency claim.
-            </p>
-            <div className="mt-5 space-y-3">
-              {courseProgress.skills.map((s) => {
-                const pct = Math.min(100, Math.round((s.xp / s.max) * 100));
-                return (
-                  <div key={s.name}>
-                    <div className="flex items-baseline justify-between gap-3">
-                      <span className="text-xs text-mist-300">{s.name}</span>
-                      <span className="shrink-0 font-mono text-[10px] text-mist-500">
-                        {s.xp}/{s.max} XP
+                <div className="flex items-center justify-between gap-3">
+                  <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-mist-500">
+                    <GraduationCap size={14} /> In progress — {course.platform}
+                  </div>
+                  <a
+                    href={course.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="focus-ring inline-flex items-center gap-1 text-[11px] font-medium text-accent-soft transition hover:text-accent"
+                  >
+                    {course.currentModule} <ExternalLink size={11} />
+                  </a>
+                </div>
+                <p className="mt-3 font-display text-sm font-semibold text-mist-100">
+                  {course.title}
+                </p>
+
+                {course.kind === "skills" ? (
+                  <>
+                    <p className="mt-1 text-xs text-mist-400">
+                      Live skill XP from Coursera — small numbers, honestly shown, not a proficiency claim.
+                    </p>
+                    <div className="mt-5 space-y-3">
+                      {course.skills.map((s) => {
+                        const pct = Math.min(100, Math.round((s.xp / s.max) * 100));
+                        return (
+                          <div key={s.name}>
+                            <div className="flex items-baseline justify-between gap-3">
+                              <span className="text-xs text-mist-300">{s.name}</span>
+                              <span className="shrink-0 font-mono text-[10px] text-mist-500">
+                                {s.xp}/{s.max} XP
+                              </span>
+                            </div>
+                            <div
+                              className="mt-1.5 h-1.5 w-full overflow-hidden rounded-full bg-mist-500/10"
+                              role="progressbar"
+                              aria-label={s.name}
+                              aria-valuenow={s.xp}
+                              aria-valuemin={0}
+                              aria-valuemax={s.max}
+                            >
+                              <div
+                                className="h-full rounded-full bg-gradient-to-r from-accent to-pulse"
+                                style={{ width: `${Math.max(pct, 2)}%` }}
+                              />
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-mist-400">
+                      <span>{course.completionPct}% course completion</span>
+                      <span className="text-mist-500">·</span>
+                      <span>
+                        Weighted grade {course.weightedGrade}%{" "}
+                        <span className="text-mist-500">({course.passingGrade}% to pass)</span>
                       </span>
                     </div>
                     <div
-                      className="mt-1.5 h-1.5 w-full overflow-hidden rounded-full bg-mist-500/10"
+                      className="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-mist-500/10"
                       role="progressbar"
-                      aria-label={s.name}
-                      aria-valuenow={s.xp}
+                      aria-label={`${course.title} completion`}
+                      aria-valuenow={course.completionPct}
                       aria-valuemin={0}
-                      aria-valuemax={s.max}
+                      aria-valuemax={100}
                     >
                       <div
                         className="h-full rounded-full bg-gradient-to-r from-accent to-pulse"
-                        style={{ width: `${Math.max(pct, 2)}%` }}
+                        style={{ width: `${Math.max(course.completionPct, 2)}%` }}
                       />
                     </div>
-                  </div>
-                );
-              })}
-            </div>
-          </RevealOnScroll>
+                    <div className="mt-5 space-y-3">
+                      {course.modules.map((m) => {
+                        const pct = Math.min(100, Math.round((m.correct / m.total) * 100));
+                        return (
+                          <div key={m.name}>
+                            <div className="flex items-baseline justify-between gap-3">
+                              <span className="text-xs text-mist-300">
+                                {m.name}
+                                {m.complete && (
+                                  <span className="ml-1.5 text-[10px] text-signal-green">✓</span>
+                                )}
+                              </span>
+                              <span className="shrink-0 font-mono text-[10px] text-mist-500">
+                                {m.correct}/{m.total}
+                              </span>
+                            </div>
+                            <div
+                              className="mt-1.5 h-1.5 w-full overflow-hidden rounded-full bg-mist-500/10"
+                              role="progressbar"
+                              aria-label={m.name}
+                              aria-valuenow={m.correct}
+                              aria-valuemin={0}
+                              aria-valuemax={m.total}
+                            >
+                              <div
+                                className="h-full rounded-full bg-gradient-to-r from-accent to-pulse"
+                                style={{ width: `${Math.max(pct, 2)}%` }}
+                              />
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </>
+                )}
+              </RevealOnScroll>
+            ))}
+          </div>
         </div>
       </div>
     </section>

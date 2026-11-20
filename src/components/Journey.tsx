@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { GraduationCap } from "lucide-react";
+import { GraduationCap, FileText } from "lucide-react";
 import { motion, useScroll, useSpring } from "framer-motion";
 import { journey, education } from "@/data/profile";
 import { SectionHeading } from "./SectionHeading";
@@ -89,13 +89,26 @@ export function Journey() {
               <GraduationCap size={14} /> Education
             </div>
             <ul className="mt-5 space-y-5">
-              {education.map((e) => (
-                <li key={e.school}>
+              {education.map((e, i) => (
+                <li key={`${e.school}-${i}`}>
                   <p className="text-sm font-semibold text-mist-100">
                     {e.school}
                   </p>
                   <p className="mt-1 text-xs text-mist-400">{e.credential}</p>
-                  <p className="mt-1 text-xs text-mist-500">{e.period}</p>
+                  <p className="mt-1 text-xs text-mist-500">
+                    {e.period}
+                    {e.detail ? ` · ${e.detail}` : ""}
+                  </p>
+                  {e.fileHref && (
+                    <a
+                      href={e.fileHref}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="focus-ring mt-1.5 inline-flex items-center gap-1.5 text-xs font-medium text-accent-soft transition hover:text-accent"
+                    >
+                      <FileText size={12} /> View certificate
+                    </a>
+                  )}
                 </li>
               ))}
             </ul>

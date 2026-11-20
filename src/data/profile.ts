@@ -57,6 +57,20 @@ export const education = [
     credential: "Online professional training — web development, computer science & programming fundamentals",
     period: "2023 – Present",
   },
+  {
+    school: "StudySection",
+    credential: "English Language Diploma Certificate (Advanced)",
+    period: "July 2023",
+    detail: "Pass · 26/50 (52%) · Intermediate",
+    fileHref: "/documents/studysection-english-language-diploma.pdf",
+  },
+  {
+    school: "StudySection",
+    credential: "Computer Applications Diploma Certificate (Advanced)",
+    period: "August 2026",
+    detail: "Pass · 40/50 (80%) · Very Good",
+    fileHref: "/documents/studysection-computer-applications-diploma.pdf",
+  },
 ];
 
 export const journey = [
