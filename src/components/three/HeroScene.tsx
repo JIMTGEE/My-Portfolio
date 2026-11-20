@@ -37,12 +37,12 @@ function Scene() {
   // as the hero's main character, not a shy accent confined to one corner.
   const shapes = useMemo(
     () => [
-      { geo: new THREE.OctahedronGeometry(0.85, 0), pos: [-3.4, 1.6, -2.2] as const, speed: -0.09, color: "#caff3f" },
-      { geo: new THREE.TorusGeometry(0.55, 0.16, 8, 28), pos: [-2.6, -1.8, -1.6] as const, speed: 0.11, color: "#b06bff" },
-      { geo: new THREE.TetrahedronGeometry(0.6, 0), pos: [3.6, 2.0, -2.8] as const, speed: -0.08, color: "#6a52ff" },
-      { geo: new THREE.IcosahedronGeometry(0.7, 0), pos: [3.0, -1.4, -2.0] as const, speed: 0.07, color: "#caff3f" },
-      { geo: new THREE.OctahedronGeometry(0.5, 0), pos: [0.2, 2.6, -3.4] as const, speed: 0.1, color: "#b06bff" },
-      { geo: new THREE.TorusGeometry(0.4, 0.12, 8, 24), pos: [-1.0, -2.6, -3.0] as const, speed: -0.12, color: "#6a52ff" },
+      { geo: new THREE.OctahedronGeometry(0.85, 0), pos: [-3.4, 1.6, -2.2] as const, speed: -0.09, color: "#32D9F5" },
+      { geo: new THREE.TorusGeometry(0.55, 0.16, 8, 28), pos: [-2.6, -1.8, -1.6] as const, speed: 0.11, color: "#8957F5" },
+      { geo: new THREE.TetrahedronGeometry(0.6, 0), pos: [3.6, 2.0, -2.8] as const, speed: -0.08, color: "#397BFF" },
+      { geo: new THREE.IcosahedronGeometry(0.7, 0), pos: [3.0, -1.4, -2.0] as const, speed: 0.07, color: "#32D9F5" },
+      { geo: new THREE.OctahedronGeometry(0.5, 0), pos: [0.2, 2.6, -3.4] as const, speed: 0.1, color: "#8957F5" },
+      { geo: new THREE.TorusGeometry(0.4, 0.12, 8, 24), pos: [-1.0, -2.6, -3.0] as const, speed: -0.12, color: "#397BFF" },
     ],
     []
   );
@@ -94,13 +94,13 @@ function Scene() {
           Cheap stand-in for bloom — no post-processing pass required. */}
       <group ref={signature} position={[0.6, -0.1, -1.2]}>
         <mesh geometry={signatureGeometry}>
-          <meshBasicMaterial color="#caff3f" wireframe transparent opacity={0.55} />
+          <meshBasicMaterial color="#397BFF" wireframe transparent opacity={0.55} />
         </mesh>
         <mesh geometry={signatureGeometry} scale={1.12}>
-          <meshBasicMaterial color="#b06bff" wireframe transparent opacity={0.25} />
+          <meshBasicMaterial color="#8957F5" wireframe transparent opacity={0.25} />
         </mesh>
         <mesh geometry={signatureGeometry} scale={1.3}>
-          <meshBasicMaterial color="#6a52ff" wireframe transparent opacity={0.12} />
+          <meshBasicMaterial color="#32D9F5" wireframe transparent opacity={0.12} />
         </mesh>
       </group>
 
@@ -118,7 +118,7 @@ function Scene() {
             itemSize={3}
           />
         </bufferGeometry>
-        <pointsMaterial color="#cfd1e6" size={0.03} transparent opacity={0.55} sizeAttenuation />
+        <pointsMaterial color="#B8C1D6" size={0.03} transparent opacity={0.55} sizeAttenuation />
       </points>
     </group>
   );

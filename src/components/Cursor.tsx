@@ -132,7 +132,7 @@ export function Cursor() {
                 height: 72,
                 padding: "0 18px",
                 borderColor: "transparent",
-                backgroundColor: "#caff3f",
+                backgroundColor: "#32D9F5",
                 mixBlendMode: "normal",
                 transition:
                   "min-width 0.3s cubic-bezier(0.22,1,0.36,1), height 0.3s cubic-bezier(0.22,1,0.36,1), background-color 0.25s ease",

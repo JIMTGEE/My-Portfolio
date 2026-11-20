@@ -35,7 +35,7 @@ export function ProjectCard({
         ref={tiltRef}
         href={`/projects/${project.slug}`}
         data-cursor-label="View"
-        className="focus-ring group relative block h-full overflow-hidden rounded-2xl border border-mist-500/10 bg-ink-900/40 transition duration-300 hover:-translate-y-1.5 hover:border-pulse/40 hover:shadow-[0_18px_60px_-12px_rgba(202,255,63,0.22)]"
+        className="focus-ring group relative block h-full overflow-hidden rounded-2xl border border-mist-500/10 bg-ink-900/40 transition duration-300 hover:-translate-y-1.5 hover:border-pulse/40 hover:shadow-[0_18px_60px_-12px_rgba(50,217,245,0.22)]"
       >
         <div className="relative aspect-[8/5] overflow-hidden border-b border-mist-500/10">
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -53,7 +53,7 @@ export function ProjectCard({
           <span
             aria-hidden="true"
             className="ghost-numeral absolute -bottom-3 -right-1 select-none text-[5rem] opacity-80 transition group-hover:opacity-100"
-            style={{ WebkitTextStroke: "1px rgba(202,255,63,0.4)" }}
+            style={{ WebkitTextStroke: "1px rgba(50,217,245,0.45)" }}
           >
             {num}
           </span>

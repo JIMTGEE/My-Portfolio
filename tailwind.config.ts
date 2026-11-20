@@ -27,21 +27,26 @@ const config: Config = {
           400: "rgb(var(--mist-400) / <alpha-value>)",
           500: "rgb(var(--mist-500) / <alpha-value>)",
         },
+        // Primary accent: electric blue. Secondary accent (accent-violet)
+        // and highlight (pulse, below) complete the brief's three-color
+        // accent system — blue carries primary actions and links, violet
+        // marks secondary/alternate emphasis, cyan is the one "electric"
+        // pop reserved for a few deliberate moments (see pulse comment).
         accent: {
-          DEFAULT: "#6a52ff",
-          soft: "#a799ff",
-          violet: "#b06bff",
-          deep: "#3f23d6",
+          DEFAULT: "#397BFF",
+          soft: "#7FA8FF",
+          violet: "#8957F5",
+          deep: "#2358D6",
         },
-        // pulse = the one neon "pop" color, reserved for the few moments
-        // that should feel electric rather than tasteful: cursor hover
-        // labels, index numerals, CTA glows, the hero scene's rim light.
-        // Used sparingly on purpose — a studio site has one signature
-        // accent, not five.
+        // pulse = the one neon "pop" color (highlight accent, cyan),
+        // reserved for the few moments that should feel electric rather
+        // than tasteful: cursor hover labels, index numerals, CTA glows,
+        // the hero scene's rim light. Used sparingly on purpose — a studio
+        // site has one signature pop accent, not five.
         pulse: {
-          DEFAULT: "#caff3f",
-          soft: "#e2ff9e",
-          deep: "#9fe016",
+          DEFAULT: "#32D9F5",
+          soft: "#8FEAFB",
+          deep: "#1AAFC9",
         },
         signal: {
           green: "#36d399",
@@ -57,7 +62,7 @@ const config: Config = {
       },
       backgroundImage: {
         "grid-fade":
-          "linear-gradient(to bottom, rgba(106,82,255,0.1), transparent 70%)",
+          "linear-gradient(to bottom, rgba(57,123,255,0.12), transparent 70%)",
       },
       keyframes: {
         "fade-up": {
