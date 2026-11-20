@@ -1,11 +1,13 @@
 import { services } from "@/data/services";
 import { SectionHeading } from "./SectionHeading";
 import { RevealOnScroll } from "./RevealOnScroll";
+import { AmbientField } from "./AmbientField";
 
 export function Services() {
   return (
-    <section id="services" className="relative bg-ink-900/40 py-24 sm:py-28">
-      <div className="container-page">
+    <section id="services" className="relative overflow-hidden bg-ink-900/40 py-24 sm:py-28">
+      <AmbientField />
+      <div className="container-page relative z-10">
         <SectionHeading
           index="03"
           kicker="Services"

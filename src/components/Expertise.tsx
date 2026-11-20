@@ -1,11 +1,13 @@
 import { workingSkills, learningSkills } from "@/data/skills";
 import { SectionHeading } from "./SectionHeading";
 import { RevealOnScroll } from "./RevealOnScroll";
+import { AmbientField } from "./AmbientField";
 
 export function Expertise() {
   return (
-    <section id="expertise" className="relative py-24 sm:py-28">
-      <div className="container-page">
+    <section id="expertise" className="relative overflow-hidden py-24 sm:py-28">
+      <AmbientField flip />
+      <div className="container-page relative z-10">
         <SectionHeading
           index="02"
           kicker="Expertise"

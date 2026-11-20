@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import dynamic from "next/dynamic";
 import { useGSAP } from "@/lib/useGSAP";
+import { useParallaxField } from "@/lib/useParallaxField";
 import { useMotionCapability } from "@/lib/useMotionCapability";
 import { useMagnetic } from "@/lib/useMagnetic";
 import { motion } from "framer-motion";
@@ -38,24 +39,12 @@ export function Hero() {
 
   const sceneRef = useRef<HTMLDivElement>(null);
 
-  useGSAP(fieldRef, (gsap, ScrollTrigger) => {
-    const layers = fieldRef.current?.querySelectorAll<HTMLElement>("[data-speed]");
-    if (layers?.length) {
-      layers.forEach((layer) => {
-        const speed = parseFloat(layer.dataset.speed ?? "0.2");
-        gsap.to(layer, {
-          yPercent: speed * 100,
-          ease: "none",
-          scrollTrigger: {
-            trigger: fieldRef.current,
-            start: "top top",
-            end: "bottom top",
-            scrub: 0.6,
-          },
-        });
-      });
-    }
+  // Shared with every other section's ambient background (see AmbientField /
+  // useParallaxField) so the same drift-on-scroll motion reads as one
+  // consistent system across the whole page, not a hero-only trick.
+  useParallaxField(fieldRef);
 
+  useGSAP(fieldRef, (gsap, ScrollTrigger) => {
     // The hero's one cinematic scroll "set piece": scrolling past it zooms
     // the 3D scene and its glow outward and dissolves them, instead of the
     // section just sliding off underneath the next one like a stack of

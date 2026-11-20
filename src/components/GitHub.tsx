@@ -5,6 +5,7 @@ import { Github, GitFork, Star, AlertTriangle, ExternalLink } from "lucide-react
 import { profile } from "@/data/profile";
 import { SectionHeading } from "./SectionHeading";
 import { RevealOnScroll } from "./RevealOnScroll";
+import { AmbientField } from "./AmbientField";
 import { useTilt } from "@/lib/useTilt";
 import { useMotionCapability } from "@/lib/useMotionCapability";
 
@@ -121,8 +122,9 @@ export function GitHubSection() {
   }, []);
 
   return (
-    <section id="github" className="relative bg-ink-900/40 py-24 sm:py-28">
-      <div className="container-page">
+    <section id="github" className="relative overflow-hidden bg-ink-900/40 py-24 sm:py-28">
+      <AmbientField flip />
+      <div className="container-page relative z-10">
         <SectionHeading
           index="05"
           kicker="GitHub"
@@ -229,7 +231,7 @@ function RepoCard({ repo: r, delay, index }: { repo: GHRepo; delay: number; inde
         target="_blank"
         rel="noreferrer"
         data-cursor-label="Open"
-        className="focus-ring group relative block h-full overflow-hidden rounded-2xl border border-mist-500/10 bg-ink-900/30 p-5 transition duration-300 hover:-translate-y-1 hover:border-pulse/40 hover:shadow-[0_18px_60px_-12px_rgba(202,255,63,0.2)]"
+        className="focus-ring group relative block h-full overflow-hidden rounded-2xl border border-mist-500/10 bg-ink-900/30 p-5 transition duration-300 hover:-translate-y-1 hover:border-pulse/40 hover:shadow-[0_18px_60px_-12px_rgba(50,217,245,0.2)]"
       >
         <span
           aria-hidden="true"

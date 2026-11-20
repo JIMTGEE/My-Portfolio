@@ -1,4 +1,5 @@
 import { RevealOnScroll } from "./RevealOnScroll";
+import { TextReveal } from "./TextReveal";
 
 export function SectionHeading({
   kicker,
@@ -39,9 +40,11 @@ export function SectionHeading({
         <span className="h-px w-6 bg-accent/60" aria-hidden="true" />
         {kicker}
       </div>
-      <h2 className="font-display relative mt-4 text-4xl font-semibold leading-[1.02] tracking-tight text-mist-100 sm:text-5xl lg:text-6xl">
-        {heading}
-      </h2>
+      <TextReveal
+        as="h2"
+        text={heading}
+        className="font-display relative mt-4 text-4xl font-semibold leading-[1.02] tracking-tight text-mist-100 sm:text-5xl lg:text-6xl"
+      />
       {description && (
         <p className="relative mt-4 text-base leading-relaxed text-mist-400">
           {description}

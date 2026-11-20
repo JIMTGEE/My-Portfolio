@@ -3,6 +3,7 @@ import { projects } from "@/data/projects";
 import { SectionHeading } from "./SectionHeading";
 import { RevealOnScroll } from "./RevealOnScroll";
 import { StatNumber } from "./StatNumber";
+import { AmbientField } from "./AmbientField";
 
 // Verified statistics only (per the brief) — the project count comes
 // straight from the data file rather than being typed as a separate
@@ -15,8 +16,9 @@ const stats = [
 
 export function About() {
   return (
-    <section id="about" className="relative py-24 sm:py-28">
-      <div className="container-page grid gap-14 lg:grid-cols-[1fr_0.85fr]">
+    <section id="about" className="relative overflow-hidden py-24 sm:py-28">
+      <AmbientField />
+      <div className="container-page relative z-10 grid gap-14 lg:grid-cols-[1fr_0.85fr]">
         <div>
           <SectionHeading
             index="01"

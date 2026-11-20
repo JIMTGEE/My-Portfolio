@@ -6,6 +6,7 @@ import { motion, useScroll, useSpring } from "framer-motion";
 import { journey, education } from "@/data/profile";
 import { SectionHeading } from "./SectionHeading";
 import { RevealOnScroll } from "./RevealOnScroll";
+import { AmbientField } from "./AmbientField";
 import { usePrefersReducedMotion } from "@/lib/usePrefersReducedMotion";
 
 function JourneyItem({ index, children }: { index: number; children: React.ReactNode }) {
@@ -39,8 +40,9 @@ export function Journey() {
   const fill = useSpring(scrollYProgress, { stiffness: 120, damping: 28, restDelta: 0.001 });
 
   return (
-    <section id="journey" className="relative bg-ink-900/40 py-24 sm:py-28">
-      <div className="container-page">
+    <section id="journey" className="relative overflow-hidden bg-ink-900/40 py-24 sm:py-28">
+      <AmbientField />
+      <div className="container-page relative z-10">
         <SectionHeading
           index="07"
           kicker="Professional Journey"
@@ -57,7 +59,13 @@ export function Journey() {
             />
             {journey.map((j, i) => (
               <JourneyItem key={j.org} index={i}>
-                <span className="absolute -left-[2.35rem] top-1.5 h-3 w-3 rounded-full border-2 border-accent bg-ink-950" />
+                <motion.span
+                  className="absolute -left-[2.35rem] top-1.5 h-3 w-3 rounded-full border-2 border-accent bg-ink-950"
+                  initial={reduce ? undefined : { scale: 0 }}
+                  whileInView={reduce ? undefined : { scale: 1 }}
+                  viewport={{ once: true, margin: "-80px" }}
+                  transition={{ duration: 0.45, delay: i * 0.07 + 0.15, ease: "backOut" }}
+                />
                 <p className="text-xs font-semibold uppercase tracking-wide text-accent-soft">
                   {j.period}
                 </p>

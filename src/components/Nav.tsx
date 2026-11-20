@@ -2,27 +2,31 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
 import { cn } from "@/lib/utils";
 import { useMotionCapability } from "@/lib/useMotionCapability";
 import { useMagnetic } from "@/lib/useMagnetic";
+import { usePrefersReducedMotion } from "@/lib/usePrefersReducedMotion";
 
 const links = [
-  { href: "/#about", label: "About" },
-  { href: "/#expertise", label: "Expertise" },
-  { href: "/#services", label: "Services" },
-  { href: "/#projects", label: "Projects" },
-  { href: "/#github", label: "GitHub" },
-  { href: "/#ai", label: "AI & ML" },
-  { href: "/#journey", label: "Journey" },
-  { href: "/#contact", label: "Contact" },
+  { href: "/#about", label: "About", id: "about" },
+  { href: "/#expertise", label: "Expertise", id: "expertise" },
+  { href: "/#services", label: "Services", id: "services" },
+  { href: "/#projects", label: "Projects", id: "projects" },
+  { href: "/#github", label: "GitHub", id: "github" },
+  { href: "/#ai", label: "AI & ML", id: "ai" },
+  { href: "/#journey", label: "Journey", id: "journey" },
+  { href: "/#contact", label: "Contact", id: "contact" },
 ];
 
 export function Nav() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [active, setActive] = useState<string | null>(null);
   const { capable, fine } = useMotionCapability();
+  const reduce = usePrefersReducedMotion();
   const ctaRef = useMagnetic<HTMLAnchorElement>(capable && fine, 0.3, 60);
 
   useEffect(() => {
@@ -39,6 +43,32 @@ export function Nav() {
     };
   }, [open]);
 
+  // Tracks which section is currently most in view so the nav can show an
+  // animated indicator under the active link — a small bit of polish that
+  // also doubles as a "you are here" aid on a now much longer, more
+  // animated page. A generous top rootMargin counts a section as active
+  // once it's roughly in the upper half of the viewport, matching where a
+  // visitor's eye actually is rather than waiting for a full section to
+  // pass by.
+  useEffect(() => {
+    const sections = links
+      .map((l) => document.getElementById(l.id))
+      .filter((el): el is HTMLElement => Boolean(el));
+    if (!sections.length) return;
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (visible) setActive(visible.target.id);
+      },
+      { rootMargin: "-20% 0px -65% 0px", threshold: [0, 0.25, 0.5, 0.75, 1] }
+    );
+    sections.forEach((s) => io.observe(s));
+    return () => io.disconnect();
+  }, []);
+
   return (
     <header
       className={cn(
@@ -51,7 +81,7 @@ export function Nav() {
       <div className="container-page flex h-16 items-center justify-between">
         <Link
           href="/#top"
-          className="focus-ring flex items-center gap-2 font-display text-sm font-semibold tracking-wide text-mist-100"
+          className="focus-ring group flex items-center gap-2 font-display text-sm font-semibold tracking-wide text-mist-100"
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
@@ -59,19 +89,29 @@ export function Nav() {
             alt=""
             width={28}
             height={28}
-            className="h-7 w-7 rounded-md"
+            className="h-7 w-7 rounded-md transition duration-300 group-hover:scale-110 group-hover:rotate-[-6deg]"
           />
           Tohybu<span className="text-accent">.</span>dev
         </Link>
 
-        <nav className="hidden items-center gap-7 lg:flex" aria-label="Primary">
+        <nav className="hidden items-center gap-1 lg:flex" aria-label="Primary">
           {links.map((l) => (
             <a
               key={l.href}
               href={l.href}
-              className="focus-ring text-sm text-mist-400 transition hover:text-mist-100"
+              className={cn(
+                "focus-ring relative px-2 py-1.5 text-sm transition",
+                active === l.id ? "text-mist-100" : "text-mist-400 hover:text-mist-100"
+              )}
             >
               {l.label}
+              {active === l.id && (
+                <motion.span
+                  layoutId="nav-active-indicator"
+                  className="absolute inset-x-2 -bottom-[1px] h-[2px] rounded-full bg-accent"
+                  transition={reduce ? { duration: 0 } : { type: "spring", stiffness: 380, damping: 32 }}
+                />
+              )}
             </a>
           ))}
         </nav>
@@ -99,7 +139,7 @@ export function Nav() {
 
       <div
         className={cn(
-          "fixed inset-x-0 top-16 z-40 h-[calc(100vh-4rem)] bg-ink-950/98 backdrop-blur-md transition-all duration-300 lg:hidden",
+          "fixed inset-x-0 top-16 z-40 h-[calc(100vh-4rem)] overflow-y-auto bg-ink-950/98 backdrop-blur-md transition-all duration-300 lg:hidden",
           open
             ? "pointer-events-auto translate-y-0 opacity-100"
             : "pointer-events-none -translate-y-4 opacity-0"
@@ -109,20 +149,29 @@ export function Nav() {
           className="container-page flex flex-col gap-1 py-8"
           aria-label="Mobile"
         >
-          {links.map((l) => (
-            <a
-              key={l.href}
-              href={l.href}
-              onClick={() => setOpen(false)}
-              className="focus-ring border-b border-mist-500/10 py-4 text-lg text-mist-200"
-            >
-              {l.label}
-            </a>
-          ))}
+          <AnimatePresence>
+            {open &&
+              links.map((l, i) => (
+                <motion.a
+                  key={l.href}
+                  href={l.href}
+                  onClick={() => setOpen(false)}
+                  initial={reduce ? undefined : { opacity: 0, x: -16 }}
+                  animate={reduce ? undefined : { opacity: 1, x: 0 }}
+                  transition={{ duration: 0.3, delay: i * 0.04, ease: [0.22, 1, 0.36, 1] }}
+                  className={cn(
+                    "focus-ring border-b border-mist-500/10 py-4 text-lg",
+                    active === l.id ? "text-accent-soft" : "text-mist-200"
+                  )}
+                >
+                  {l.label}
+                </motion.a>
+              ))}
+          </AnimatePresence>
           <a
             href="/#contact"
             onClick={() => setOpen(false)}
-            className="focus-ring mt-6 inline-flex items-center justify-center rounded-full bg-accent px-5 py-3 text-sm font-semibold text-white"
+            className="focus-ring mt-6 inline-flex items-center justify-center rounded-full bg-accent px-5 py-3 text-sm font-semibold text-white transition hover:bg-accent-deep"
           >
             Let&apos;s talk
           </a>
