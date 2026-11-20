@@ -37,26 +37,9 @@ export function Cursor() {
     if (!fine) return;
 
     let raf = 0;
+    let running = false;
     const pointer = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
     const ring = { x: pointer.x, y: pointer.y };
-
-    const onMove = (e: PointerEvent) => {
-      pointer.x = e.clientX;
-      pointer.y = e.clientY;
-      if (!visible) setVisible(true);
-    };
-
-    const onOver = (e: PointerEvent) => {
-      const target = e.target as HTMLElement | null;
-      const labeled = target?.closest<HTMLElement>("[data-cursor-label]");
-      if (labeled) {
-        setLabel(labeled.dataset.cursorLabel ?? null);
-        setHovering(true);
-        return;
-      }
-      setLabel(null);
-      setHovering(Boolean(target?.closest("a, button, [data-cursor-hover]")));
-    };
 
     const loop = () => {
       // Was 0.18 — closing an 18%-per-frame gap takes ~190ms to feel
@@ -73,11 +56,44 @@ export function Cursor() {
       if (ringRef.current) {
         ringRef.current.style.transform = `translate3d(${ring.x}px, ${ring.y}px, 0) translate(-50%, -50%)`;
       }
+
+      // Stop once the ring has caught up and nothing is moving, instead of
+      // running a mix-blend-mode-compositing frame forever for the entire
+      // time anyone is on the page — onMove restarts it instantly, so
+      // there's no visible gap, just no wasted frames while idle.
+      const settled = Math.abs(pointer.x - ring.x) < 0.4 && Math.abs(pointer.y - ring.y) < 0.4;
+      if (settled) {
+        running = false;
+        return;
+      }
       raf = requestAnimationFrame(loop);
+    };
+
+    const onMove = (e: PointerEvent) => {
+      pointer.x = e.clientX;
+      pointer.y = e.clientY;
+      if (!visible) setVisible(true);
+      if (!running) {
+        running = true;
+        raf = requestAnimationFrame(loop);
+      }
+    };
+
+    const onOver = (e: PointerEvent) => {
+      const target = e.target as HTMLElement | null;
+      const labeled = target?.closest<HTMLElement>("[data-cursor-label]");
+      if (labeled) {
+        setLabel(labeled.dataset.cursorLabel ?? null);
+        setHovering(true);
+        return;
+      }
+      setLabel(null);
+      setHovering(Boolean(target?.closest("a, button, [data-cursor-hover]")));
     };
 
     window.addEventListener("pointermove", onMove, { passive: true });
     window.addEventListener("pointerover", onOver, { passive: true });
+    running = true;
     raf = requestAnimationFrame(loop);
     document.documentElement.classList.add("has-custom-cursor");
 
