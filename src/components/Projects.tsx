@@ -11,7 +11,6 @@ import { useGSAP } from "@/lib/useGSAP";
 export function Projects() {
   const [filter, setFilter] = useState<(typeof projectCategories)[number]>("All");
   const { capable } = useMotionCapability();
-  if (typeof window !== "undefined") (window as unknown as { __capableDebug?: unknown }).__capableDebug = capable;
 
   const visible =
     filter === "All" ? projects : projects.filter((p) => p.category === filter);
@@ -81,13 +80,36 @@ export function Projects() {
  * position in it) perfectly stable while still answering the filter.
  */
 function PinnedShowcase({ filter }: { filter: (typeof projectCategories)[number] }) {
-  const sectionRef = useRef<HTMLDivElement>(null);
+  // `outerRef` is a plain-flow element whose height we set explicitly (see
+  // `setHeight` below) to the track's natural height plus however far it
+  // needs to travel horizontally. The inner `.sticky` wrapper is what
+  // visually "pins" — native `position: sticky`, not GSAP's `pin: true`.
+  //
+  // This sidesteps a real bug in the previous `pin: true` implementation:
+  // with a function-based `end` (needed because the track's scroll
+  // distance depends on viewport width/card count), GSAP's automatic
+  // pin-spacer never reserved the extra scroll distance the pin itself was
+  // using — the spacer kept `padding: 0`, so the page never grew to make
+  // room for the pin. The result wasn't a stuck pin; it was content
+  // (GitHub, then AI & Emerging Tech) sitting directly underneath Projects
+  // in the DOM flow, inside the still-active pin window, so the fixed,
+  // horizontally-scrubbing track visually bled over both sections for the
+  // whole ~1700px the pin was active. By driving the spacing ourselves —
+  // sticky needs no spacer at all — the reserved height and the scrub
+  // distance can never disagree.
+  const outerRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
 
-  useGSAP(sectionRef, (gsap, ScrollTrigger) => {
+  useGSAP(outerRef, (gsap, ScrollTrigger) => {
     const track = trackRef.current;
-    const section = sectionRef.current;
-    if (!track || !section) return;
+    const outer = outerRef.current;
+    if (!track || !outer) return;
+
+    const setHeight = () => {
+      const extra = Math.max(0, track.scrollWidth - window.innerWidth);
+      outer.style.height = `${track.offsetHeight + extra}px`;
+    };
+    setHeight();
 
     // useGSAP wraps this whole callback in gsap.context() and reverts it
     // automatically on unmount — no manual cleanup needed here.
@@ -95,34 +117,35 @@ function PinnedShowcase({ filter }: { filter: (typeof projectCategories)[number]
       x: () => -Math.max(0, track.scrollWidth - window.innerWidth),
       ease: "none",
       scrollTrigger: {
-        trigger: section,
+        trigger: outer,
         start: "top top",
         end: () => "+=" + Math.max(0, track.scrollWidth - window.innerWidth),
         scrub: 0.7,
-        pin: true,
-        anticipatePin: 1,
         invalidateOnRefresh: true,
+        onRefresh: setHeight,
       },
     });
   });
 
   return (
-    <div ref={sectionRef} className="mt-12 lg:mt-14">
-      <div
-        ref={trackRef}
-        data-project-track
-        className="flex gap-6 px-5 will-change-transform md:px-8"
-      >
-        {projects.map((p, i) => (
-          <div key={p.slug} className="w-[72vw] shrink-0 sm:w-[42vw] lg:w-[26vw]">
-            <ProjectCard
-              project={p}
-              index={i + 1}
-              delay={0}
-              dimmed={filter !== "All" && p.category !== filter}
-            />
-          </div>
-        ))}
+    <div ref={outerRef} className="relative mt-12 lg:mt-14">
+      <div className="sticky top-0 overflow-hidden">
+        <div
+          ref={trackRef}
+          data-project-track
+          className="flex gap-6 px-5 will-change-transform md:px-8"
+        >
+          {projects.map((p, i) => (
+            <div key={p.slug} className="w-[72vw] shrink-0 sm:w-[42vw] lg:w-[26vw]">
+              <ProjectCard
+                project={p}
+                index={i + 1}
+                delay={0}
+                dimmed={filter !== "All" && p.category !== filter}
+              />
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
