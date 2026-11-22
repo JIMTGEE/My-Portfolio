@@ -6,7 +6,6 @@ import { motion, useScroll, useSpring } from "framer-motion";
 import { journey, education } from "@/data/profile";
 import { SectionHeading } from "./SectionHeading";
 import { RevealOnScroll } from "./RevealOnScroll";
-import { AmbientField } from "./AmbientField";
 import { usePrefersReducedMotion } from "@/lib/usePrefersReducedMotion";
 
 function JourneyItem({ index, children }: { index: number; children: React.ReactNode }) {
@@ -41,7 +40,6 @@ export function Journey() {
 
   return (
     <section id="journey" className="relative overflow-hidden bg-ink-900/40 py-24 sm:py-28">
-      <AmbientField />
       <div className="container-page relative z-10">
         <SectionHeading
           index="07"

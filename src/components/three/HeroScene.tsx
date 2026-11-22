@@ -21,6 +21,14 @@ function Scene() {
   const group = useRef<THREE.Group>(null);
   const signature = useRef<THREE.Group>(null);
   const pointer = useRef({ x: 0, y: 0 });
+  // How far into the hero's own scroll-through we are, 0→1. Read directly
+  // off window.scrollY rather than wiring GSAP/ScrollTrigger into the R3F
+  // tree — this is the one number the scene needs, and a plain scroll
+  // listener is cheaper than giving the canvas its own ScrollTrigger
+  // instance. Drives a real rotation the pointer-tilt above doesn't: proof,
+  // on a trackpad with the mouse never moving, that scrolling itself is
+  // turning the scene — the previous pass only reacted to the pointer.
+  const scrollT = useRef(0);
 
   useEffect(() => {
     const onMove = (e: PointerEvent) => {
@@ -28,7 +36,18 @@ function Scene() {
       pointer.current.y = (e.clientY / window.innerHeight) * 2 - 1;
     };
     window.addEventListener("pointermove", onMove, { passive: true });
-    return () => window.removeEventListener("pointermove", onMove);
+
+    const heroHeight = () => document.getElementById("top")?.offsetHeight ?? window.innerHeight;
+    const onScroll = () => {
+      scrollT.current = Math.min(1, Math.max(0, window.scrollY / heroHeight()));
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+
+    return () => {
+      window.removeEventListener("pointermove", onMove);
+      window.removeEventListener("scroll", onScroll);
+    };
   }, []);
 
   // Spread across the entire frame now, foreground copy sits on a scrim
@@ -66,10 +85,16 @@ function Scene() {
   useFrame((state, delta) => {
     if (!group.current) return;
     const t = state.clock.elapsedTime;
-    const targetX = pointer.current.y * 0.2 + Math.sin(t * 0.05) * 0.04;
-    const targetY = pointer.current.x * 0.28 + Math.cos(t * 0.04) * 0.05;
-    group.current.rotation.x += (targetX - group.current.rotation.x) * 0.04;
-    group.current.rotation.y += (targetY - group.current.rotation.y) * 0.04;
+    const st = scrollT.current;
+    // Scroll adds a full, unmistakable quarter-turn + a vertical climb on
+    // top of the existing pointer-tilt and idle drift — big enough that it
+    // reads immediately as "scrolling moves the scene," not another
+    // fraction-of-a-degree wobble indistinguishable from the idle sway.
+    const targetX = pointer.current.y * 0.2 + Math.sin(t * 0.05) * 0.04 + st * 0.5;
+    const targetY = pointer.current.x * 0.28 + Math.cos(t * 0.04) * 0.05 + st * 0.9;
+    group.current.rotation.x += (targetX - group.current.rotation.x) * 0.06;
+    group.current.rotation.y += (targetY - group.current.rotation.y) * 0.06;
+    group.current.position.y += (st * 1.6 - group.current.position.y) * 0.06;
 
     group.current.children.forEach((child, i) => {
       const s = shapes[i];
@@ -84,7 +109,10 @@ function Scene() {
       signature.current.scale.setScalar(breathe);
     }
 
-    state.camera.position.z = 7.4 + Math.sin(t * 0.08) * 0.2;
+    // Scroll also dollies the camera in, so depth itself visibly shifts
+    // (the back shapes separate from the front ones) rather than only the
+    // whole group spinning as one flat unit.
+    state.camera.position.z = 7.4 + Math.sin(t * 0.08) * 0.2 - st * 2.2;
   });
 
   return (
@@ -94,19 +122,22 @@ function Scene() {
           Cheap stand-in for bloom — no post-processing pass required. */}
       <group ref={signature} position={[0.6, -0.1, -1.2]}>
         <mesh geometry={signatureGeometry}>
-          <meshBasicMaterial color="#397BFF" wireframe transparent opacity={0.55} />
+          <meshBasicMaterial color="#397BFF" wireframe transparent opacity={0.85} />
         </mesh>
         <mesh geometry={signatureGeometry} scale={1.12}>
-          <meshBasicMaterial color="#8957F5" wireframe transparent opacity={0.25} />
+          <meshBasicMaterial color="#8957F5" wireframe transparent opacity={0.45} />
         </mesh>
         <mesh geometry={signatureGeometry} scale={1.3}>
-          <meshBasicMaterial color="#32D9F5" wireframe transparent opacity={0.12} />
+          <meshBasicMaterial color="#32D9F5" wireframe transparent opacity={0.22} />
+        </mesh>
+        <mesh geometry={signatureGeometry} scale={1.5}>
+          <meshBasicMaterial color="#32D9F5" wireframe transparent opacity={0.1} />
         </mesh>
       </group>
 
       {shapes.map((s, i) => (
         <mesh key={i} geometry={s.geo} position={s.pos}>
-          <meshBasicMaterial color={s.color} wireframe transparent opacity={0.5} />
+          <meshBasicMaterial color={s.color} wireframe transparent opacity={0.85} />
         </mesh>
       ))}
       <points>
@@ -118,7 +149,7 @@ function Scene() {
             itemSize={3}
           />
         </bufferGeometry>
-        <pointsMaterial color="#B8C1D6" size={0.03} transparent opacity={0.55} sizeAttenuation />
+        <pointsMaterial color="#E8EDF7" size={0.045} transparent opacity={0.8} sizeAttenuation />
       </points>
     </group>
   );

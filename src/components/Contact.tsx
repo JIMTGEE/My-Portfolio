@@ -7,7 +7,6 @@ import { profile } from "@/data/profile";
 import { sendContactMessage, type ContactState } from "@/app/actions/contact";
 import { SectionHeading } from "./SectionHeading";
 import { RevealOnScroll } from "./RevealOnScroll";
-import { AmbientField } from "./AmbientField";
 import { useMotionCapability } from "@/lib/useMotionCapability";
 import { useMagnetic } from "@/lib/useMagnetic";
 
@@ -60,7 +59,6 @@ export function Contact() {
 
   return (
     <section id="contact" className="relative overflow-hidden py-24 sm:py-28">
-      <AmbientField />
       <div className="container-page relative z-10">
         <SectionHeading
           index="08"

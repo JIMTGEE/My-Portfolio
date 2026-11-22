@@ -4,7 +4,7 @@ import { useRef, useState } from "react";
 import { projects, projectCategories } from "@/data/projects";
 import { SectionHeading } from "./SectionHeading";
 import { ProjectCard } from "./ProjectCard";
-import { AmbientField } from "./AmbientField";
+import { ProjectSlide } from "./ProjectSlide";
 import { useMotionCapability } from "@/lib/useMotionCapability";
 import { useGSAP } from "@/lib/useGSAP";
 
@@ -16,8 +16,16 @@ export function Projects() {
     filter === "All" ? projects : projects.filter((p) => p.category === filter);
 
   return (
-    <section id="projects" className="relative overflow-hidden py-24 sm:py-28 lg:py-0">
-      <AmbientField flip />
+    // No `overflow-hidden` here: an `overflow` value other than `visible` on
+    // any ancestor becomes the sticky containing block for the showcase's
+    // `position: sticky` child below, and since this section itself never
+    // scrolls internally, the browser was computing stickiness against that
+    // (always-zero) internal scroll offset instead of the real page scroll —
+    // sticky silently never engaged, so the showcase just scrolled past in
+    // normal flow instead of pinning. The horizontally-translated track is
+    // already clipped by the sticky wrapper's own `overflow-hidden` below,
+    // so nothing escapes horizontally without this section needing it too.
+    <section id="projects" className="relative py-24 sm:py-28 lg:py-0">
       <div className="relative z-10 flex min-h-0 flex-col lg:min-h-screen lg:justify-center lg:py-20">
         <div className="container-page">
           <div className="flex flex-col gap-8 sm:flex-row sm:items-end sm:justify-between">
@@ -129,18 +137,17 @@ function PinnedShowcase({ filter }: { filter: (typeof projectCategories)[number]
 
   return (
     <div ref={outerRef} className="relative mt-12 lg:mt-14">
-      <div className="sticky top-0 overflow-hidden">
+      <div className="sticky top-0 flex h-[78vh] items-center overflow-hidden sm:h-[80vh] lg:h-[84vh]">
         <div
           ref={trackRef}
           data-project-track
-          className="flex gap-6 px-5 will-change-transform md:px-8"
+          className="flex h-[88%] gap-6 px-5 will-change-transform sm:gap-8 md:px-10 lg:gap-10"
         >
           {projects.map((p, i) => (
-            <div key={p.slug} className="w-[72vw] shrink-0 sm:w-[42vw] lg:w-[26vw]">
-              <ProjectCard
+            <div key={p.slug} className="h-full w-[86vw] shrink-0 sm:w-[64vw] lg:w-[48vw]">
+              <ProjectSlide
                 project={p}
                 index={i + 1}
-                delay={0}
                 dimmed={filter !== "All" && p.category !== filter}
               />
             </div>

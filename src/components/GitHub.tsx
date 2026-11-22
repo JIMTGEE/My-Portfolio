@@ -5,7 +5,6 @@ import { Github, GitFork, Star, AlertTriangle, ExternalLink } from "lucide-react
 import { profile } from "@/data/profile";
 import { SectionHeading } from "./SectionHeading";
 import { RevealOnScroll } from "./RevealOnScroll";
-import { AmbientField } from "./AmbientField";
 import { useTilt } from "@/lib/useTilt";
 import { useMotionCapability } from "@/lib/useMotionCapability";
 
@@ -123,7 +122,6 @@ export function GitHubSection() {
 
   return (
     <section id="github" className="relative overflow-hidden bg-ink-900/40 py-24 sm:py-28">
-      <AmbientField flip />
       <div className="container-page relative z-10">
         <SectionHeading
           index="05"

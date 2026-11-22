@@ -2,12 +2,10 @@ import { Sparkles, FlaskConical, BadgeCheck, GraduationCap, ExternalLink, FileTe
 import { emergingFocus, emergingProjects, credentials, courseProgress } from "@/data/skills";
 import { SectionHeading } from "./SectionHeading";
 import { RevealOnScroll } from "./RevealOnScroll";
-import { AmbientField } from "./AmbientField";
 
 export function AIFocus() {
   return (
     <section id="ai" className="relative overflow-hidden py-24 sm:py-28">
-      <AmbientField flip />
       <div className="container-page relative z-10">
         <SectionHeading
           index="06"

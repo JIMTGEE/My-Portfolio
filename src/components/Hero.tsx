@@ -83,15 +83,6 @@ export function Hero() {
       */}
       <div ref={fieldRef} className="pointer-events-none absolute inset-0">
         <div
-          data-speed="0.15"
-          className="ambient-glow absolute -left-32 top-[-8rem] h-[34rem] w-[34rem] animate-glow-pulse"
-        />
-        <div
-          data-speed="0.3"
-          className="ambient-glow absolute right-[-10rem] top-20 h-[30rem] w-[30rem] animate-glow-pulse"
-          style={{ animationDelay: "-3s" }}
-        />
-        <div
           data-speed="0.45"
           className="absolute inset-x-0 top-0 h-[40rem] bg-[radial-gradient(circle_at_20%_20%,rgba(57,123,255,0.22),transparent_55%)]"
         />
