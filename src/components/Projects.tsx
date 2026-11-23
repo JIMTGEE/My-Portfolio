@@ -4,7 +4,6 @@ import { useRef, useState } from "react";
 import { projects, projectCategories } from "@/data/projects";
 import { SectionHeading } from "./SectionHeading";
 import { ProjectCard } from "./ProjectCard";
-import { ProjectSlide } from "./ProjectSlide";
 import { useMotionCapability } from "@/lib/useMotionCapability";
 import { useGSAP } from "@/lib/useGSAP";
 
@@ -137,17 +136,18 @@ function PinnedShowcase({ filter }: { filter: (typeof projectCategories)[number]
 
   return (
     <div ref={outerRef} className="relative mt-12 lg:mt-14">
-      <div className="sticky top-0 flex h-[78vh] items-center overflow-hidden sm:h-[80vh] lg:h-[84vh]">
+      <div className="sticky top-0 overflow-hidden">
         <div
           ref={trackRef}
           data-project-track
-          className="flex h-[88%] gap-6 px-5 will-change-transform sm:gap-8 md:px-10 lg:gap-10"
+          className="flex gap-6 px-5 will-change-transform md:px-8"
         >
           {projects.map((p, i) => (
-            <div key={p.slug} className="h-full w-[86vw] shrink-0 sm:w-[64vw] lg:w-[48vw]">
-              <ProjectSlide
+            <div key={p.slug} className="w-[72vw] shrink-0 sm:w-[42vw] lg:w-[26vw]">
+              <ProjectCard
                 project={p}
                 index={i + 1}
+                delay={0}
                 dimmed={filter !== "All" && p.category !== filter}
               />
             </div>

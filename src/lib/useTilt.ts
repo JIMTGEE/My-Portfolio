@@ -38,16 +38,27 @@ export function useTilt<T extends HTMLElement>(
 
     const onLeave = () => {
       cancelAnimationFrame(frame);
+      el.style.transition = "transform 0.5s cubic-bezier(0.22, 1, 0.36, 1)";
       el.style.transform = "perspective(900px) rotateX(0deg) rotateY(0deg) translateZ(0)";
       el.style.setProperty("--glare-o", "0");
     };
 
-    el.style.transition = "transform 0.4s cubic-bezier(0.22, 1, 0.36, 1)";
+    const onEnter = () => {
+      el.style.transition = "transform 0.12s linear";
+    };
+
+    // A short transition during live pointer movement keeps the tilt from
+    // feeling like it's snapping frame-to-frame, without the laggy trail a
+    // longer one produces when the pointer is still actively moving — the
+    // leave transition below is the one that gets the slower, graceful ease.
+    el.style.transition = "transform 0.12s linear";
+    el.addEventListener("pointerenter", onEnter);
     el.addEventListener("pointermove", onMove);
     el.addEventListener("pointerleave", onLeave);
 
     return () => {
       cancelAnimationFrame(frame);
+      el.removeEventListener("pointerenter", onEnter);
       el.removeEventListener("pointermove", onMove);
       el.removeEventListener("pointerleave", onLeave);
       el.style.transform = "";

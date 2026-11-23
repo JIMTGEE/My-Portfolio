@@ -35,7 +35,7 @@ export function ProjectCard({
   dimmed?: boolean;
 }) {
   const { fine } = useMotionCapability();
-  const tiltRef = useTilt<HTMLAnchorElement>(fine, 6);
+  const tiltRef = useTilt<HTMLAnchorElement>(fine, 14);
   useImageParallax(tiltRef);
   const num = String(index).padStart(2, "0");
 

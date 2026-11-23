@@ -240,42 +240,23 @@ export function Hero() {
           </motion.div>
         </div>
 
+        {/* Just the identity mark here now — the 3D laptop rendered behind
+            this column (see HeroScene) is the "here's code, here's tech"
+            visual, so a second, static, hand-typed code snippet floating
+            next to it would be redundant chrome competing with the thing
+            that's actually supposed to be the hero's centerpiece. */}
         <motion.div
           initial={{ opacity: 0, scale: 0.92, y: 16 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-          className="relative mx-auto flex w-full max-w-sm flex-col items-center gap-6"
+          className="relative mx-auto mt-2 w-full max-w-sm lg:mt-auto lg:self-start"
         >
-          <div className="relative">
+          <div className="relative mx-auto w-fit">
             <div
               className="ambient-glow absolute inset-0 -z-10 animate-glow-pulse"
               aria-hidden="true"
             />
-            <AvatarMark size={176} />
-          </div>
-
-          <div className="glass-panel w-full rounded-2xl p-4 font-mono text-[11px] leading-relaxed text-mist-300 shadow-xl shadow-black/30 sm:text-xs">
-            <div className="mb-2 flex gap-1.5">
-              <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
-              <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
-              <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
-            </div>
-            <p>
-              <span className="text-accent-soft">const</span> dev = {"{"}
-            </p>
-            <p className="pl-4">
-              name: <span className="text-signal-green">&apos;Tohybu Tajudeen&apos;</span>,
-            </p>
-            <p className="pl-4">
-              stack: [<span className="text-signal-green">&apos;PHP&apos;</span>, <span className="text-signal-green">&apos;MySQL&apos;</span>, <span className="text-signal-green">&apos;JS&apos;</span>],
-            </p>
-            <p className="pl-4">
-              learning: [<span className="text-signal-green">&apos;Python&apos;</span>, <span className="text-signal-green">&apos;Azure AI&apos;</span>],
-            </p>
-            <p className="pl-4">
-              basedIn: <span className="text-signal-green">&apos;Accra, GH&apos;</span>,
-            </p>
-            <p>{"};"}</p>
+            <AvatarMark size={120} />
           </div>
         </motion.div>
       </div>
