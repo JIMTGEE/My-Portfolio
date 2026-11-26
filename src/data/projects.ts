@@ -16,6 +16,18 @@ export type Project = {
   /** An optional downloadable document for this project — e.g. a client's
    * own company profile deck — surfaced as a link on the case-study page. */
   document?: { label: string; href: string };
+  /** Short feature-area labels shown as a metrics strip on the card and
+   * case-study page — "what this system actually covers," in the project's
+   * own words (never a fabricated percentage/number, since none of these
+   * were measured). Mirrors the brief's "Metrics: Admissions / Academics /
+   * Attendance / Fees" example, which is itself a feature list, not a
+   * statistic. */
+  metrics?: string[];
+  /** Ordered steps of the system's real data/request flow, for the
+   * case-study page's architecture diagram — only set where the project
+   * actually has a backend pipeline worth diagramming (skipped for the
+   * mostly-static/marketing sites below). */
+  systemMap?: string[];
 };
 
 export const projects: Project[] = [
@@ -42,6 +54,14 @@ export const projects: Project[] = [
       label: "Company profile (PPTX)",
       href: "/documents/believe-travel-consult-profile.pptx",
     },
+    metrics: ["Visa & passport applications", "Birth-certificate applications", "Pre-screening", "Offers & blog CMS"],
+    systemMap: [
+      "Visitor fills a form",
+      "AJAX submit",
+      "MySQL table (per form type)",
+      "Documents stored server-side",
+      "Admin dashboard review",
+    ],
   },
   {
     slug: "queenspa-school",
@@ -62,6 +82,15 @@ export const projects: Project[] = [
     githubUrl: "https://github.com/JIMTGEE/QPMCEDU",
     image: "/projects/qpmcedu.svg",
     featured: true,
+    metrics: ["Admissions pipeline", "Attendance (present/absent)", "Fee payments (bug fixed)", "Student diagnosis tool (in progress)"],
+    systemMap: [
+      "Student record",
+      "Admissions",
+      "Attendance",
+      "Academic records",
+      "Fee payments",
+      "Teacher diagnosis flag",
+    ],
   },
   {
     slug: "edusync",
@@ -80,6 +109,8 @@ export const projects: Project[] = [
     technologies: ["PHP", "MySQL", "JavaScript"],
     githubUrl: "https://github.com/JIMTGEE/EDUSYNC",
     image: "/projects/edusync.svg",
+    metrics: ["Admissions pipeline", "Online application form", "Contact workflow", "Internal admin API"],
+    systemMap: ["Applicant", "Online application form", "Admissions pipeline", "Admin review API"],
   },
   {
     slug: "transnow",
@@ -99,6 +130,8 @@ export const projects: Project[] = [
     liveUrl: "https://trnasnow.com",
     githubUrl: "https://github.com/JIMTGEE/TRANSNOW",
     image: "/projects/transnow.svg",
+    metrics: ["Employer accounts", "Job listings", "Applications", "Direct messaging"],
+    systemMap: ["Employer or seeker signs up", "Job listing posted", "Application submitted", "Messaging", "Admin oversight"],
   },
   {
     slug: "ciug",
@@ -118,6 +151,7 @@ export const projects: Project[] = [
     liveUrl: "https://ci-ug.com",
     githubUrl: "https://github.com/JIMTGEE/CIUG",
     image: "/projects/ciug.svg",
+    metrics: ["Program pages", "HSK testing info", "Scholarship pathways", "Full SEO sitemaps"],
   },
   {
     slug: "bless-mall-ghana",
@@ -137,6 +171,8 @@ export const projects: Project[] = [
     liveUrl: "https://blessmallgh.com",
     githubUrl: "https://github.com/JIMTGEE/BLESS-MALL",
     image: "/projects/blessmall.svg",
+    metrics: ["Category browsing", "Cart & checkout", "Paystack payments", "SMS order notifications"],
+    systemMap: ["Shopper browses", "Cart & checkout", "Paystack payment", "Order created", "SMS notification"],
   },
   {
     slug: "nerdspring",
@@ -156,6 +192,7 @@ export const projects: Project[] = [
     liveUrl: "https://nerd-spring.com",
     image: "/projects/nerdspring.svg",
     featured: false,
+    metrics: ["Studio services", "Case studies (EduSync, TransNow)", "Agency portfolio"],
   },
   {
     slug: "jihope",
@@ -176,6 +213,7 @@ export const projects: Project[] = [
     githubUrl: "https://github.com/JIMTGEE/jihope-tech",
     image: "/projects/jihope.svg",
     featured: true,
+    metrics: ["Multi-layer parallax hero", "Services & process", "Pricing", "Case studies (BTC, QPMC)"],
   },
 ];
 

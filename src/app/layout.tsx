@@ -24,6 +24,8 @@ import { Footer } from "@/components/Footer";
 import { SmoothScroll } from "@/components/SmoothScroll";
 import { Cursor } from "@/components/Cursor";
 import { ScrollProgress } from "@/components/ScrollProgress";
+import { CommandPalette } from "@/components/CommandPalette";
+import { MobileDock } from "@/components/MobileDock";
 import { Intro } from "@/components/Intro";
 import { profile } from "@/data/profile";
 import "./globals.css";
@@ -111,10 +113,12 @@ export default function RootLayout({
         <SmoothScroll>
           <ScrollProgress />
           <Cursor />
+          <CommandPalette />
           <ThemeProvider>
             <Nav />
             <main id="main">{children}</main>
             <Footer />
+            <MobileDock />
           </ThemeProvider>
         </SmoothScroll>
       </body>

@@ -43,7 +43,7 @@ export function Journey() {
       <div className="container-page relative z-10">
         <SectionHeading
           index="07"
-          kicker="Professional Journey"
+          kicker="My Journey"
           heading="How I got here"
           description="Entrepreneurship, teaching, travel — and a straight line of self-directed technical learning running through all of it."
         />

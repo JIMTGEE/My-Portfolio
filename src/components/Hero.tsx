@@ -7,9 +7,12 @@ import { useParallaxField } from "@/lib/useParallaxField";
 import { useMotionCapability } from "@/lib/useMotionCapability";
 import { useMagnetic } from "@/lib/useMagnetic";
 import { motion } from "framer-motion";
-import { ArrowRight, Github, Linkedin, MapPin } from "lucide-react";
+import { ArrowRight, FolderGit2, Rocket, Github, Linkedin, MapPin } from "lucide-react";
 import { profile } from "@/data/profile";
+import { projects } from "@/data/projects";
 import { AvatarMark } from "./AvatarMark";
+import { StatNumber } from "./StatNumber";
+import { usePrefersReducedMotion } from "@/lib/usePrefersReducedMotion";
 
 // WebGL costs nothing until it's actually needed, and never ships to a
 // server render (no DOM/canvas there) — loaded client-side only, and only
@@ -36,6 +39,8 @@ export function Hero() {
   const fieldRef = useRef<HTMLDivElement>(null);
   const { capable, fine } = useMotionCapability();
   const ctaRef = useMagnetic<HTMLAnchorElement>(capable && fine, 0.3, 70);
+  const reduce = usePrefersReducedMotion();
+  const shippedCount = projects.length;
 
   const sceneRef = useRef<HTMLDivElement>(null);
 
@@ -160,29 +165,41 @@ export function Hero() {
             ))}
           </motion.p>
 
-          <h1 className="font-display mt-5 text-[clamp(2.75rem,7.5vw,5.75rem)] font-semibold leading-[0.98] tracking-tight text-mist-100">
-            {profile.heroHeadline.map((line, i) => (
-              <span key={line} className="block overflow-hidden">
+          {/* Name-forward headline — the thing that should be unmistakable
+              in the first half-second on a page like this isn't a generic
+              "building digital experiences" line every developer portfolio
+              uses, it's whose site this is. Stacked, oversized, same
+              Linear/Stripe/Vercel "the name IS the hero" treatment the
+              brief pointed at, with the one concrete line of positioning
+              (heroTagline) picking up where a vague tagline left off. */}
+          <h1 className="font-display mt-5 text-[clamp(3.25rem,10vw,7.5rem)] font-semibold uppercase leading-[0.9] tracking-tight text-mist-100">
+            {profile.name.split(" ").map((word, i) => (
+              <span key={word} className="block overflow-hidden">
                 <motion.span
-                  className={`block ${i === profile.heroHeadline.length - 1 ? "text-gradient" : ""}`}
+                  className={`block ${i === 1 ? "text-gradient" : ""}`}
                   variants={lineVariants}
                   initial="hidden"
                   animate="show"
                   transition={{ delay: i * 0.12 }}
                 >
-                  {line}
+                  {word}
                 </motion.span>
               </span>
             ))}
           </h1>
 
+          {/* The fuller heroIntro paragraph still exists (it's the SEO meta
+              description — see layout.tsx) but doesn't also need to sit
+              here: next to a name this large, one concrete tagline reads as
+              confident; stacking a second paragraph under it just reads as
+              dense, exactly what a premium hero shouldn't be. */}
           <motion.p
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.5 }}
-            className="mt-6 max-w-xl text-base leading-relaxed text-mist-400 sm:text-lg"
+            transition={{ duration: 0.6, delay: 0.42 }}
+            className="mt-5 max-w-xl text-lg font-medium leading-snug text-mist-200 sm:text-xl"
           >
-            {profile.heroIntro}
+            {profile.heroTagline}
           </motion.p>
 
           <motion.div
@@ -196,7 +213,7 @@ export function Hero() {
               href="#projects"
               className="focus-ring group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-accent px-6 py-3 text-sm font-semibold text-white shadow-[0_0_0_0_rgba(50,217,245,0)] transition hover:bg-accent-deep hover:shadow-[0_0_32px_4px_rgba(50,217,245,0.35)]"
             >
-              Explore Projects
+              View Work
               <ArrowRight
                 size={16}
                 className="transition group-hover:translate-x-0.5"
@@ -206,7 +223,7 @@ export function Hero() {
               href="#contact"
               className="focus-ring inline-flex items-center gap-2 rounded-full border border-mist-500/25 px-6 py-3 text-sm font-semibold text-mist-100 transition hover:border-accent/50 hover:text-accent"
             >
-              Contact Me
+              Contact
             </a>
           </motion.div>
 
@@ -240,24 +257,73 @@ export function Hero() {
           </motion.div>
         </div>
 
-        {/* Just the identity mark here now — the 3D laptop rendered behind
-            this column (see HeroScene) is the "here's code, here's tech"
-            visual, so a second, static, hand-typed code snippet floating
-            next to it would be redundant chrome competing with the thing
-            that's actually supposed to be the hero's centerpiece. */}
+        {/* The identity mark, plus two small floating stat chips sitting
+            over the 3D laptop scene — real, verified numbers (project
+            count straight from data/projects.ts, same rule About's stats
+            follow) rather than invented metrics, echoing the "floating
+            cards" element next to a hero illustration without competing
+            with the laptop for attention the way a second fake-terminal
+            panel did. `lg:h-[22rem]` just gives the floating chips room to
+            be positioned absolutely without the column collapsing to the
+            avatar's own height. */}
         <motion.div
           initial={{ opacity: 0, scale: 0.92, y: 16 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-          className="relative mx-auto mt-2 w-full max-w-sm lg:mt-auto lg:self-start"
+          className="relative mx-auto mt-2 w-full max-w-sm lg:mt-auto lg:h-[22rem] lg:max-w-none lg:self-start"
         >
-          <div className="relative mx-auto w-fit">
+          {/* lg:absolute + bottom-left: in normal flow this would sit at
+              the top of the column, right over the laptop screen's code
+              lines — fine on mobile (no 3D scene there to collide with, see
+              `capable` gating on HeroScene), but a real collision on desktop.
+              Anchoring it to the column's bottom-left corner instead keeps
+              it clear of the screen and reads as a deliberately "pinned"
+              identity badge, the same idiom as the two stat chips. */}
+          <div className="relative mx-auto w-fit lg:absolute lg:bottom-0 lg:left-0 lg:mx-0">
             <div
               className="ambient-glow absolute inset-0 -z-10 animate-glow-pulse"
               aria-hidden="true"
             />
             <AvatarMark size={120} />
           </div>
+
+          <motion.div
+            aria-hidden="true"
+            animate={reduce ? undefined : { y: [0, -8, 0] }}
+            transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
+            className="glass-panel absolute -right-1 top-6 hidden items-center gap-2.5 rounded-xl px-3.5 py-2.5 lg:flex"
+          >
+            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-mist-500/15 bg-ink-800/60 text-accent-soft">
+              <FolderGit2 size={15} />
+            </span>
+            <span>
+              <span className="block font-display text-base font-semibold leading-none text-mist-100">
+                <StatNumber value={shippedCount} suffix="+" />
+              </span>
+              <span className="mt-1 block text-[10px] uppercase tracking-wide text-mist-500">
+                Systems shipped
+              </span>
+            </span>
+          </motion.div>
+
+          <motion.div
+            aria-hidden="true"
+            animate={reduce ? undefined : { y: [0, 8, 0] }}
+            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 0.4 }}
+            className="glass-panel absolute bottom-10 right-10 hidden items-center gap-2.5 rounded-xl px-3.5 py-2.5 lg:flex"
+          >
+            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-mist-500/15 bg-ink-800/60 text-pulse">
+              <Rocket size={15} />
+            </span>
+            <span>
+              <span className="block font-display text-base font-semibold leading-none text-mist-100">
+                <StatNumber value={3} suffix="+" />
+              </span>
+              <span className="mt-1 block text-[10px] uppercase tracking-wide text-mist-500">
+                Years building
+              </span>
+            </span>
+          </motion.div>
         </motion.div>
       </div>
     </section>

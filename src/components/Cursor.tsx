@@ -120,6 +120,10 @@ export function Cursor() {
         style={{
           opacity: label ? 0 : 1,
           transition: "opacity 0.2s ease",
+          // A soft glow on the lead dot only — subtle enough not to fight
+          // the ring's own difference-blend trick, but enough that the
+          // cursor reads as "lit" rather than a flat UI dot.
+          boxShadow: "0 0 12px 2px rgba(50,217,245,0.65)",
         }}
       />
       <div

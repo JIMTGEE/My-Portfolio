@@ -64,7 +64,10 @@ export function Footer() {
           <ArrowUp size={16} />
         </a>
       </div>
-      <div className="border-t border-mist-500/10 py-5">
+      {/* pb-16 clears MobileDock's fixed bottom bar (phones only — that
+          component is sm:hidden, so this extra padding is harmless at
+          sm and up, just an unused few pixels of whitespace). */}
+      <div className="border-t border-mist-500/10 py-5 pb-16 sm:pb-5">
         <p className="container-page text-xs text-mist-500">
           © {year} {profile.name}. Built with Next.js, TypeScript & Tailwind CSS.
         </p>

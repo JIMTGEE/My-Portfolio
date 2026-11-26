@@ -3,12 +3,13 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Search } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
 import { cn } from "@/lib/utils";
 import { useMotionCapability } from "@/lib/useMotionCapability";
 import { useMagnetic } from "@/lib/useMagnetic";
 import { usePrefersReducedMotion } from "@/lib/usePrefersReducedMotion";
+import { useActiveSection } from "@/lib/useActiveSection";
 
 const links = [
   { href: "/#about", label: "About", id: "about" },
@@ -21,13 +22,17 @@ const links = [
   { href: "/#contact", label: "Contact", id: "contact" },
 ];
 
+const sectionIds = links.map((l) => l.id);
+
 export function Nav() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [active, setActive] = useState<string | null>(null);
   const { capable, fine } = useMotionCapability();
   const reduce = usePrefersReducedMotion();
   const ctaRef = useMagnetic<HTMLAnchorElement>(capable && fine, 0.3, 60);
+  // Shared with MobileDock and the command palette (see lib/useActiveSection)
+  // so every "where am I" indicator on the page agrees with every other one.
+  const active = useActiveSection(sectionIds);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -42,32 +47,6 @@ export function Nav() {
       document.body.style.overflow = "";
     };
   }, [open]);
-
-  // Tracks which section is currently most in view so the nav can show an
-  // animated indicator under the active link — a small bit of polish that
-  // also doubles as a "you are here" aid on a now much longer, more
-  // animated page. A generous top rootMargin counts a section as active
-  // once it's roughly in the upper half of the viewport, matching where a
-  // visitor's eye actually is rather than waiting for a full section to
-  // pass by.
-  useEffect(() => {
-    const sections = links
-      .map((l) => document.getElementById(l.id))
-      .filter((el): el is HTMLElement => Boolean(el));
-    if (!sections.length) return;
-
-    const io = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((e) => e.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-        if (visible) setActive(visible.target.id);
-      },
-      { rootMargin: "-20% 0px -65% 0px", threshold: [0, 0.25, 0.5, 0.75, 1] }
-    );
-    sections.forEach((s) => io.observe(s));
-    return () => io.disconnect();
-  }, []);
 
   return (
     <header
@@ -117,6 +96,15 @@ export function Nav() {
         </nav>
 
         <div className="flex items-center gap-3">
+          <button
+            type="button"
+            onClick={() => window.dispatchEvent(new CustomEvent("command-palette:open"))}
+            className="focus-ring hidden items-center gap-2 rounded-full border border-mist-500/20 px-3 py-1.5 text-xs text-mist-400 transition hover:border-accent/40 hover:text-mist-100 sm:inline-flex"
+            aria-label="Open command palette"
+          >
+            <Search size={13} />
+            <kbd className="font-mono text-[10px] text-mist-500">⌘K</kbd>
+          </button>
           <ThemeToggle />
           <a
             ref={ctaRef}
@@ -147,7 +135,7 @@ export function Nav() {
       >
         <nav
           className="container-page flex flex-col gap-1 py-8"
-          aria-label="Mobile"
+          aria-label="Mobile menu"
         >
           <AnimatePresence>
             {open &&

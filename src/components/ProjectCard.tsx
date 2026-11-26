@@ -40,7 +40,19 @@ export function ProjectCard({
   const num = String(index).padStart(2, "0");
 
   return (
-    <RevealOnScroll delay={delay} className={dimmed ? "transition duration-500" : undefined}>
+    // min-w-0 matters here, not just as defensive boilerplate: this is a
+    // CSS Grid item on the mobile fallback grid, and a grid item's default
+    // min-width is `auto` (≈ its content's max-content size). The metrics
+    // strip below is `truncate` (white-space: nowrap + ellipsis), and
+    // without min-w-0 here, the pre-ellipsis nowrap width of the *longest*
+    // metrics string was winning the grid's track-sizing pass before
+    // truncate's own overflow:hidden ever got a chance to clip it — a few
+    // extra pixels of real page-level horizontal scroll on every card, not
+    // just a clipped-looking one.
+    <RevealOnScroll
+      delay={delay}
+      className={dimmed ? "min-w-0 transition duration-500" : "min-w-0"}
+    >
       <Link
         ref={tiltRef}
         href={`/projects/${project.slug}`}
@@ -65,7 +77,7 @@ export function ProjectCard({
           <div className="absolute inset-0 bg-gradient-to-t from-ink-950/70 via-transparent to-transparent opacity-60 transition group-hover:opacity-90" />
           <span
             aria-hidden="true"
-            className="ghost-numeral absolute -bottom-3 -right-1 select-none text-[5rem] opacity-80 transition group-hover:opacity-100"
+            className="ghost-numeral absolute -bottom-3 right-0 select-none text-[3.75rem] opacity-80 transition group-hover:opacity-100 sm:text-[5rem]"
             style={{ WebkitTextStroke: "1px rgba(50,217,245,0.45)" }}
           >
             {num}
@@ -97,6 +109,15 @@ export function ProjectCard({
           <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-mist-400">
             {project.summary}
           </p>
+          {/* "Stop listing projects, start showing case studies" — a quick
+              scan of what the system actually covers, distinct from the
+              tech-stack chips below it. Capped at 2 so a compact card never
+              wraps onto a third line. */}
+          {project.metrics && project.metrics.length > 0 && (
+            <p className="mt-2 truncate text-xs font-medium text-accent-soft">
+              {project.metrics.slice(0, 2).join(" · ")}
+            </p>
+          )}
           <div className="mt-4 flex flex-wrap gap-1.5">
             {project.technologies.slice(0, 4).map((t) => (
               <span

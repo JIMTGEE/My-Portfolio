@@ -7,6 +7,7 @@ import { SectionHeading } from "./SectionHeading";
 import { RevealOnScroll } from "./RevealOnScroll";
 import { useTilt } from "@/lib/useTilt";
 import { useMotionCapability } from "@/lib/useMotionCapability";
+import { StatNumber } from "./StatNumber";
 
 type GHUser = {
   login: string;
@@ -125,7 +126,7 @@ export function GitHubSection() {
       <div className="container-page relative z-10">
         <SectionHeading
           index="05"
-          kicker="GitHub"
+          kicker="GitHub Activity"
           heading="Live from my GitHub"
           description="Pulled directly from the GitHub API — not a curated screenshot. Real repositories, real activity."
         />
@@ -200,7 +201,12 @@ export function GitHubSection() {
                 </div>
                 <Stat label="Public repos" value={state.user.public_repos} />
                 <Stat label="Followers" value={state.user.followers} />
-                <Stat label="Shown below" value={state.repos.length} />
+                <Stat
+                  label="Technologies"
+                  value={
+                    new Set(state.repos.map((r) => r.language).filter(Boolean)).size
+                  }
+                />
               </RevealOnScroll>
 
               <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -278,7 +284,7 @@ function Stat({ label, value }: { label: string; value: number }) {
   return (
     <div>
       <p className="font-display text-2xl font-semibold text-mist-100">
-        {value}
+        <StatNumber value={value} />
       </p>
       <p className="mt-1 text-xs uppercase tracking-wide text-mist-500">
         {label}

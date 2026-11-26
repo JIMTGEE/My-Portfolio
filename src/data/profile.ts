@@ -8,16 +8,50 @@ export const profile = {
   location: "Accra, Ghana",
   availability: "Open to freelance & collaboration",
   heroHeadline: ["Building digital", "experiences.", "Engineering possibilities."],
+  // A single, concrete line instead of the generic headline above — what
+  // actually gets built, in the same language as the real project
+  // categories in data/projects.ts (Business / Education / Institutional /
+  // Commerce), not a marketing phrase that happens to scan well.
+  heroTagline: "Building systems used by schools, businesses and institutions.",
   heroIntro:
     "I'm Tohybu Tajudeen, a web developer and technology entrepreneur based in Ghana. I build responsive websites, web applications, and database-driven systems — and I'm expanding into Python, Microsoft Azure AI, and machine learning, one real project at a time.",
   about: {
     kicker: "About",
     heading: "My journey in technology",
-    paragraphs: [
-      "My path into technology started with curiosity and a willingness to keep learning. Through web development I've worked on business websites, education platforms, travel and recruitment systems, and database-backed management tools — each one teaching me something new about how software actually gets used.",
-      "I co-founded NerdSpring and ran it as a technology business delivering websites, web apps and school management systems — a crash course in the entrepreneurial side of software: not just how it's built, but how it has to create real value for the people using it. That partnership ended in 2026, and I'm now building JIHOPE, my own web & software studio, carrying that experience forward on my own terms.",
-      "Before web development, I taught French and introduced young students to programming logic at Queenest Paradise Montessori, and spent time in the travel industry at B.B.H Travel — both of which shaped how I explain technical things to non-technical people.",
-      "My journey continues beyond web development. I'm expanding my knowledge of Python, Microsoft Azure AI, and machine learning, with a growing interest in intelligent systems, document automation, and OCR-based tools that solve problems I've actually run into — like marking exam papers at scale.",
+    // Bento-tile content for About.tsx — same substance as the original
+    // four paragraphs, just split into named, individually-expandable
+    // tiles instead of one unbroken block of text (see the doc's "stop
+    // listing, start showing" / bento-grid feedback). `span` is the tile's
+    // lg:col-span so the grid keeps its two-wide/one-wide rhythm.
+    tiles: [
+      {
+        icon: "code",
+        title: "Web development",
+        teaser: "Business sites, school systems, travel and recruitment platforms — one real project at a time.",
+        body: "My path into technology started with curiosity and a willingness to keep learning. Through web development I've worked on business websites, education platforms, travel and recruitment systems, and database-backed management tools — each one teaching me something new about how software actually gets used.",
+        span: 2,
+      },
+      {
+        icon: "rocket",
+        title: "Entrepreneurship",
+        teaser: "Co-founded NerdSpring, then built JIHOPE on my own terms.",
+        body: "I co-founded NerdSpring and ran it as a technology business delivering websites, web apps and school management systems — a crash course in the entrepreneurial side of software: not just how it's built, but how it has to create real value for the people using it. That partnership ended in 2026, and I'm now building JIHOPE, my own web & software studio, carrying that experience forward on my own terms.",
+        span: 1,
+      },
+      {
+        icon: "graduation",
+        title: "Teaching & travel",
+        teaser: "French and coding logic at Queenest Paradise Montessori; travel ops at B.B.H Travel.",
+        body: "Before web development, I taught French and introduced young students to programming logic at Queenest Paradise Montessori, and spent time in the travel industry at B.B.H Travel — both of which shaped how I explain technical things to non-technical people.",
+        span: 1,
+      },
+      {
+        icon: "brain",
+        title: "AI & machine learning",
+        teaser: "Expanding into Python, Azure AI and OCR-based automation — starting with exam marking at scale.",
+        body: "My journey continues beyond web development. I'm expanding my knowledge of Python, Microsoft Azure AI, and machine learning, with a growing interest in intelligent systems, document automation, and OCR-based tools that solve problems I've actually run into — like marking exam papers at scale.",
+        span: 2,
+      },
     ],
   },
   githubUsername: "JIMTGEE",

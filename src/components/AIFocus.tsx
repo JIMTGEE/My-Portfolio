@@ -9,8 +9,8 @@ export function AIFocus() {
       <div className="container-page relative z-10">
         <SectionHeading
           index="06"
-          kicker="AI & Emerging Technologies"
-          heading="Where I'm headed next"
+          kicker="Currently Learning"
+          heading="Where I'm headed next: AI"
           description="Learning in public, with a concrete target rather than buzzword-collecting. Clearly separated from the working skills above."
         />
 

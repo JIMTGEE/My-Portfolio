@@ -30,7 +30,7 @@ export function Projects() {
           <div className="flex flex-col gap-8 sm:flex-row sm:items-end sm:justify-between">
             <SectionHeading
               index="04"
-              kicker="Projects"
+              kicker="Selected Work"
               heading="Systems I've actually shipped"
               description="Real client work — public sites, admin dashboards, and the problems they were built to solve. Not a mockup in the bunch."
             />
