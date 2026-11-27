@@ -89,7 +89,7 @@ export function Hero() {
       <div ref={fieldRef} className="pointer-events-none absolute inset-0">
         <div
           data-speed="0.45"
-          className="absolute inset-x-0 top-0 h-[40rem] bg-[radial-gradient(circle_at_20%_20%,rgba(57,123,255,0.22),transparent_55%)]"
+          className="absolute inset-x-0 top-0 h-[40rem] bg-[radial-gradient(circle_at_20%_20%,rgba(79,70,229,0.22),transparent_55%)]"
         />
         <svg
           data-speed="0.22"
@@ -211,7 +211,7 @@ export function Hero() {
             <a
               ref={ctaRef}
               href="#projects"
-              className="focus-ring group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-accent px-6 py-3 text-sm font-semibold text-white shadow-[0_0_0_0_rgba(50,217,245,0)] transition hover:bg-accent-deep hover:shadow-[0_0_32px_4px_rgba(50,217,245,0.35)]"
+              className="focus-ring group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-accent px-6 py-3 text-sm font-semibold text-white shadow-[0_0_0_0_rgba(0,229,255,0)] transition hover:bg-accent-deep hover:shadow-[0_0_32px_4px_rgba(0,229,255,0.35)]"
             >
               View Work
               <ArrowRight

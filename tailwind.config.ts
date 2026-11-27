@@ -27,26 +27,28 @@ const config: Config = {
           400: "rgb(var(--mist-400) / <alpha-value>)",
           500: "rgb(var(--mist-500) / <alpha-value>)",
         },
-        // Primary accent: electric blue. Secondary accent (accent-violet)
-        // and highlight (pulse, below) complete the brief's three-color
-        // accent system — blue carries primary actions and links, violet
-        // marks secondary/alternate emphasis, cyan is the one "electric"
-        // pop reserved for a few deliberate moments (see pulse comment).
+        // Primary accent: indigo (the redesign brief's exact #4F46E5).
+        // Secondary accent (accent-violet, the brief's #7C3AED) and
+        // highlight (pulse, below, the brief's #00E5FF) complete the
+        // three-color accent system — indigo carries primary actions and
+        // links, violet marks secondary/alternate emphasis, cyan is the one
+        // "electric" pop reserved for a few deliberate moments (see pulse
+        // comment).
         accent: {
-          DEFAULT: "#397BFF",
-          soft: "#7FA8FF",
-          violet: "#8957F5",
-          deep: "#2358D6",
+          DEFAULT: "#4F46E5",
+          soft: "#A5B4FC",
+          violet: "#7C3AED",
+          deep: "#4338CA",
         },
-        // pulse = the one neon "pop" color (highlight accent, cyan),
-        // reserved for the few moments that should feel electric rather
-        // than tasteful: cursor hover labels, index numerals, CTA glows,
-        // the hero scene's rim light. Used sparingly on purpose — a studio
-        // site has one signature pop accent, not five.
+        // pulse = the one neon "pop" color (highlight accent, the brief's
+        // exact #00E5FF cyan), reserved for the few moments that should
+        // feel electric rather than tasteful: cursor hover labels, index
+        // numerals, CTA glows, the hero scene's rim light. Used sparingly
+        // on purpose — a studio site has one signature pop accent, not five.
         pulse: {
-          DEFAULT: "#32D9F5",
-          soft: "#8FEAFB",
-          deep: "#1AAFC9",
+          DEFAULT: "#00E5FF",
+          soft: "#67E8F9",
+          deep: "#00B8CC",
         },
         signal: {
           green: "#36d399",

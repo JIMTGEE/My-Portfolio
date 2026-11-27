@@ -57,7 +57,7 @@ function Scene() {
   // width/color so it reads as an editor at a glance without needing an
   // actual texture (no asset to load, nothing that can fail to fetch).
   const codeLines = useMemo(() => {
-    const colors = ["#397BFF", "#8957F5", "#32D9F5", "#929DB2", "#929DB2"];
+    const colors = ["#4F46E5", "#7C3AED", "#00E5FF", "#929DB2", "#929DB2"];
     return Array.from({ length: 9 }, (_, i) => ({
       y: 0.62 - i * 0.135,
       width: 0.4 + ((i * 37) % 10) / 10 / 1.6,
@@ -67,9 +67,9 @@ function Scene() {
 
   const chipDefs = useMemo(
     () => [
-      { pos: [0.1, 1.7, -0.6] as const, color: "#397BFF", speed: 0.6 },
-      { pos: [3.1, 0.7, -0.9] as const, color: "#32D9F5", speed: 0.5 },
-      { pos: [1.2, -2.1, -0.4] as const, color: "#8957F5", speed: 0.7 },
+      { pos: [0.1, 1.7, -0.6] as const, color: "#4F46E5", speed: 0.6 },
+      { pos: [3.1, 0.7, -0.9] as const, color: "#00E5FF", speed: 0.5 },
+      { pos: [1.2, -2.1, -0.4] as const, color: "#7C3AED", speed: 0.7 },
     ],
     []
   );
@@ -141,9 +141,9 @@ function Scene() {
           near-black page background instead of just blending into it. This
           one light is what actually makes the laptop read as an object in
           the dark rather than a silhouette-less void. */}
-      <pointLight position={[1.8, 1.6, -2.4]} intensity={5} color="#32D9F5" distance={10} />
-      <pointLight position={[-2.6, -1.2, 1.8]} intensity={2.4} color="#8957F5" distance={9} />
-      <pointLight position={[2.2, -0.4, 2.6]} intensity={1.6} color="#397BFF" distance={9} />
+      <pointLight position={[1.8, 1.6, -2.4]} intensity={5} color="#00E5FF" distance={10} />
+      <pointLight position={[-2.6, -1.2, 1.8]} intensity={2.4} color="#7C3AED" distance={9} />
+      <pointLight position={[2.2, -0.4, 2.6]} intensity={1.6} color="#4F46E5" distance={9} />
 
       {/* The laptop: a base deck plus a hinged lid, tilted to read as a
           three-quarter "open on a desk, facing you" angle. Sits in the
@@ -197,11 +197,11 @@ function Scene() {
               two-pass trick for a glow with no actual bloom pass. */}
           <mesh position={[0, 0.86, 0.06]}>
             <planeGeometry args={[3.3, 2.1]} />
-            <meshBasicMaterial color="#397BFF" transparent opacity={0.16} />
+            <meshBasicMaterial color="#4F46E5" transparent opacity={0.16} />
           </mesh>
           <mesh position={[0, 0.86, 0.064]}>
             <planeGeometry args={[2.72, 1.64]} />
-            <meshBasicMaterial color="#5fb4ff" transparent opacity={0.4} />
+            <meshBasicMaterial color="#5fd4ff" transparent opacity={0.4} />
           </mesh>
           {/* The screen itself. */}
           <group position={[0, 0.86, 0.07]}>
@@ -222,7 +222,7 @@ function Scene() {
             ))}
             <mesh ref={activeLine} position={[-0.6, 0.62, 0.004]}>
               <planeGeometry args={[1.5, 0.07]} />
-              <meshBasicMaterial color="#32D9F5" transparent opacity={0.6} />
+              <meshBasicMaterial color="#00E5FF" transparent opacity={0.6} />
             </mesh>
           </group>
         </group>
@@ -270,7 +270,7 @@ function Scene() {
             itemSize={3}
           />
         </bufferGeometry>
-        <pointsMaterial color="#E8EDF7" size={0.04} transparent opacity={0.6} sizeAttenuation />
+        <pointsMaterial color="#FFFFFF" size={0.04} transparent opacity={0.6} sizeAttenuation />
       </points>
     </group>
   );

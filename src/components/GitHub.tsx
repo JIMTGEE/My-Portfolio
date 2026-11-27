@@ -235,7 +235,7 @@ function RepoCard({ repo: r, delay, index }: { repo: GHRepo; delay: number; inde
         target="_blank"
         rel="noreferrer"
         data-cursor-label="Open"
-        className="focus-ring group relative block h-full overflow-hidden rounded-2xl border border-mist-500/10 bg-ink-900/30 p-5 transition duration-300 hover:-translate-y-1 hover:border-pulse/40 hover:shadow-[0_18px_60px_-12px_rgba(50,217,245,0.2)]"
+        className="focus-ring group relative block h-full overflow-hidden rounded-2xl border border-mist-500/10 bg-ink-900/30 p-5 transition duration-300 hover:-translate-y-1 hover:border-pulse/40 hover:shadow-[0_18px_60px_-12px_rgba(0,229,255,0.2)]"
       >
         <span
           aria-hidden="true"

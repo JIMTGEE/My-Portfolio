@@ -19,9 +19,9 @@ export function AvatarMark({ size = 220 }: { size?: number }) {
     >
       <defs>
         <linearGradient id={id} x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor="#32D9F5" />
-          <stop offset="45%" stopColor="#397BFF" />
-          <stop offset="100%" stopColor="#080D1A" />
+          <stop offset="0%" stopColor="#00E5FF" />
+          <stop offset="45%" stopColor="#4F46E5" />
+          <stop offset="100%" stopColor="#0A0A0A" />
         </linearGradient>
       </defs>
       <rect width="220" height="220" rx="56" fill={`url(#${id})`} />

@@ -57,7 +57,7 @@ export function ProjectCard({
         ref={tiltRef}
         href={`/projects/${project.slug}`}
         data-cursor-label="View"
-        className={`focus-ring group relative block h-full overflow-hidden rounded-2xl border border-mist-500/10 bg-ink-900/40 transition duration-300 hover:-translate-y-1.5 hover:border-pulse/40 hover:shadow-[0_18px_60px_-12px_rgba(50,217,245,0.22)] ${
+        className={`focus-ring group relative block h-full overflow-hidden rounded-2xl border border-mist-500/10 bg-ink-900/40 transition duration-300 hover:-translate-y-1.5 hover:border-pulse/40 hover:shadow-[0_18px_60px_-12px_rgba(0,229,255,0.22)] ${
           dimmed ? "opacity-30 saturate-50" : "opacity-100"
         }`}
       >
@@ -78,7 +78,7 @@ export function ProjectCard({
           <span
             aria-hidden="true"
             className="ghost-numeral absolute -bottom-3 right-0 select-none text-[3.75rem] opacity-80 transition group-hover:opacity-100 sm:text-[5rem]"
-            style={{ WebkitTextStroke: "1px rgba(50,217,245,0.45)" }}
+            style={{ WebkitTextStroke: "1px rgba(0,229,255,0.45)" }}
           >
             {num}
           </span>

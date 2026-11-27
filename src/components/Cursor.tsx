@@ -123,7 +123,7 @@ export function Cursor() {
           // A soft glow on the lead dot only — subtle enough not to fight
           // the ring's own difference-blend trick, but enough that the
           // cursor reads as "lit" rather than a flat UI dot.
-          boxShadow: "0 0 12px 2px rgba(50,217,245,0.65)",
+          boxShadow: "0 0 12px 2px rgba(0,229,255,0.65)",
         }}
       />
       <div
@@ -136,7 +136,7 @@ export function Cursor() {
                 height: 72,
                 padding: "0 18px",
                 borderColor: "transparent",
-                backgroundColor: "#32D9F5",
+                backgroundColor: "#00E5FF",
                 mixBlendMode: "normal",
                 transition:
                   "min-width 0.3s cubic-bezier(0.22,1,0.36,1), height 0.3s cubic-bezier(0.22,1,0.36,1), background-color 0.25s ease",

@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ArrowUpRight, ArrowRight, Download, Github, Layers } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, Download, Github } from "lucide-react";
 import { projects } from "@/data/projects";
 import { RevealOnScroll } from "@/components/RevealOnScroll";
+import { SystemMap } from "@/components/SystemMap";
 
 export function generateStaticParams() {
   return projects.map((p) => ({ slug: p.slug }));
@@ -132,27 +133,9 @@ export default function ProjectPage({
         </RevealOnScroll>
 
         {project.systemMap && project.systemMap.length > 0 && (
-          <RevealOnScroll delay={0.15} className="mt-12">
-            <h2 className="flex items-center gap-2 font-display text-sm font-semibold uppercase tracking-wide text-mist-500">
-              <Layers size={14} className="text-accent-soft" /> How it&apos;s wired together
-            </h2>
-            <div className="glass-panel mt-4 flex flex-col gap-2 rounded-2xl p-5 sm:flex-row sm:flex-wrap sm:items-center sm:gap-0">
-              {project.systemMap.map((step, i) => (
-                <div key={step} className="flex items-center gap-2 sm:gap-0">
-                  <span className="rounded-xl border border-mist-500/15 bg-ink-800/60 px-3.5 py-2 text-xs font-medium text-mist-200 sm:text-sm">
-                    {step}
-                  </span>
-                  {i < project.systemMap!.length - 1 && (
-                    <ArrowRight
-                      size={14}
-                      className="mx-2.5 shrink-0 rotate-90 text-mist-600 sm:rotate-0"
-                      aria-hidden="true"
-                    />
-                  )}
-                </div>
-              ))}
-            </div>
-          </RevealOnScroll>
+          <div className="mt-12">
+            <SystemMap steps={project.systemMap} />
+          </div>
         )}
 
         <div className="mt-12 space-y-10">
